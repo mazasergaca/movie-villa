@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/movie-villa/static/css/main.7acaea2f.css",
+    "main.js": "/movie-villa/static/js/main.dad155f9.js",
+    "index.html": "/movie-villa/index.html",
+    "main.7acaea2f.css.map": "/movie-villa/static/css/main.7acaea2f.css.map",
+    "main.dad155f9.js.map": "/movie-villa/static/js/main.dad155f9.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7acaea2f.css",
+    "static/js/main.dad155f9.js"
+  ]
+}
