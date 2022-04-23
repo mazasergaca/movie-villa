@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { Container } from '@mui/material';
 import { Dropdown } from 'react-bootstrap';
-import { IoIosArrowDown } from 'react-icons/io';
 import { AiOutlineSearch } from 'react-icons/ai';
 
 import logo from 'assets/logo.svg';
@@ -23,15 +23,18 @@ const Header = () => {
     <HeaderStyled>
       <Container style={{ display: 'flex', justifyContent: 'space-between' }}>
         <Wrapper>
-          <img src={logo} alt="logo" width="54" />
+          <Link to="/">
+            <img src={logo} alt="logo" width="48" />
+          </Link>
           <List>
             <Item>
               <Dropdown>
                 <Dropdown.Toggle style={dropdownStyles}>Movies</Dropdown.Toggle>
                 <Dropdown.Menu>
-                  <Dropdown.Item href="#">Action</Dropdown.Item>
-                  <Dropdown.Item href="#">Another action</Dropdown.Item>
-                  <Dropdown.Item href="#">Something else</Dropdown.Item>
+                  <Dropdown.Item href="#">Trending</Dropdown.Item>
+                  <Dropdown.Item href="#">Popular</Dropdown.Item>
+                  <Dropdown.Item href="#">Top rated</Dropdown.Item>
+                  <Dropdown.Item href="#">Upcoming</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </Item>
