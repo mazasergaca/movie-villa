@@ -2,28 +2,21 @@ import React, { FC } from 'react';
 import Slider from 'react-slick';
 import { Container } from '@mui/material';
 
-import {
-  Section,
-  Wrapper,
-  Title,
-  Link,
-  Item,
-  Poster,
-  Date,
-  Name,
-  Genre,
-} from './BoxMovie.style';
+import ItemMovie from 'components/ItemMovie/ItemMovie.tsx';
+import { Section, Wrapper, Title, Link } from './BoxMovie.style';
 
 interface BoxMovieProps {
   title: string;
 }
 
+// settings for react-slick
 const settings = {
   dots: true,
-  infinite: true,
+  infinite: false,
   speed: 500,
   slidesToScroll: 1,
   slidesToShow: 5,
+  swipeToSlide: true,
 };
 
 const BoxMovie: FC<BoxMovieProps> = ({ movies, title }) => {
@@ -35,16 +28,16 @@ const BoxMovie: FC<BoxMovieProps> = ({ movies, title }) => {
           <Link href="#">View all</Link>
         </Wrapper>
         <Slider {...settings}>
-          {movies.map((color, index) => (
-            <div key={index}>
-              <Item>
-                <Poster color={color}></Poster>
-                <Date>USA, 2022</Date>
-                <Name>Batman Begin</Name>
-                <Genre>Action, Thriller</Genre>
-              </Item>
-            </div>
-          ))}
+          {movies &&
+            movies?.data?.results.map(movie => (
+              <div key={movie.id}>
+                <ItemMovie
+                  src={movie.poster_path}
+                  date={movie.release_date || movie.first_air_date}
+                  name={movie.original_title || movie.original_name}
+                />
+              </div>
+            ))}
         </Slider>
       </Container>
     </Section>

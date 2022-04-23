@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const Section = styled.section`
   margin-top: 130px;
 
+  // classes from the react-slick library
   & .slick-prev:before {
     content: '❮';
   }
@@ -37,41 +38,4 @@ export const Link = styled.a`
   line-height: 1.16;
 
   color: #ffffff;
-`;
-
-export const Item = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-export const Poster = styled.div`
-  width: 200px;
-  height: 260px;
-
-  border-radius: 10px;
-  background-color: ${props => props.color};
-`;
-
-export const Date = styled.span`
-  margin-top: 18px;
-
-  font-weight: 700;
-
-  color: #9ca3af;
-`;
-
-export const Name = styled.span`
-  margin-top: 8px;
-
-  font-weight: 700;
-  font-size: 18px;
-`;
-
-export const Genre = styled.span`
-  margin-top: 8px;
-
-  font-weight: 700;
-
-  color: #9ca3af;
 `;
