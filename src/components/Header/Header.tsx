@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Link } from 'react-router-dom';
 import { Container } from '@mui/material';
 import { Dropdown } from 'react-bootstrap';
@@ -16,6 +17,8 @@ import {
   Input,
   Button,
   dropdownStyles,
+  WrapperLinks,
+  LinkStyled,
 } from './Header.style';
 
 const Header = () => {
@@ -29,13 +32,17 @@ const Header = () => {
           <List>
             <Item>
               <Dropdown>
-                <Dropdown.Toggle style={dropdownStyles}>Movies</Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <Dropdown.Item href="#">Trending</Dropdown.Item>
-                  <Dropdown.Item href="#">Popular</Dropdown.Item>
-                  <Dropdown.Item href="#">Top rated</Dropdown.Item>
-                  <Dropdown.Item href="#">Upcoming</Dropdown.Item>
-                </Dropdown.Menu>
+                <Dropdown.Toggle style={dropdownStyles}>
+                  Movies
+                  <Dropdown.Menu>
+                    <WrapperLinks>
+                      <LinkStyled to="movies/trending">Trending</LinkStyled>
+                      <LinkStyled to="movies/popular">Popular</LinkStyled>
+                      <LinkStyled to="movies/top_rated">Top rated</LinkStyled>
+                      <LinkStyled to="movies/upcoming">Upcoming</LinkStyled>
+                    </WrapperLinks>
+                  </Dropdown.Menu>
+                </Dropdown.Toggle>
               </Dropdown>
             </Item>
             <Item>

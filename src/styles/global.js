@@ -7,6 +7,10 @@ export const Global = createGlobalStyle`
     box-sizing: border-box;
   }
 
+  html {
+    overflow-y: scroll;
+  }
+
   body {
     font-family: 'DM Sans';
     font-size: 12px;

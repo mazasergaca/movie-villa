@@ -8,11 +8,10 @@ import { useUpcomingMovies } from 'api/hooks/useUpcomingMovies.ts';
 
 import Hero from 'components/Hero';
 import BoxMovie from 'components/BoxMovie';
-import Footer from 'components/Footer';
 
 const Home = () => {
   const { popularMovies } = usePopularMovies();
-  const { trendingMovies } = useTrendingMovies();
+  const { trendingMovies } = useTrendingMovies(1);
   const { popularTv } = usePopularTv();
   const { ratedMovies } = useRatedMovies();
   const { upcomingMovies } = useUpcomingMovies();
@@ -20,13 +19,24 @@ const Home = () => {
   return (
     <>
       <Hero />
-      <BoxMovie movies={trendingMovies} title="Latest and trending" />
-      <BoxMovie movies={popularMovies} title="Popular" />
-      <BoxMovie movies={ratedMovies} title="Top rated" />
-      <BoxMovie movies={upcomingMovies} title="Upcoming movies in theatres" />
+      <BoxMovie
+        movies={trendingMovies}
+        title="Trending"
+        path="movies/trending"
+      />
+      <BoxMovie movies={popularMovies} title="Popular" path="movies/popular" />
+      <BoxMovie
+        movies={ratedMovies}
+        title="Top rated"
+        path="movies/top_rated"
+      />
+      <BoxMovie
+        movies={upcomingMovies}
+        title="Upcoming movies in theatres"
+        path="movies/upcoming"
+      />
       {/* <BoxMovie movies={arr} title="Anime" /> */}
-      <BoxMovie movies={popularTv} title="TV shows" />
-      <Footer />
+      <BoxMovie movies={popularTv} title="TV shows" path="movies/" />
     </>
   );
 };

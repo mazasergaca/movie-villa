@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const HeaderStyled = styled.header`
   padding: 5px 0;
@@ -8,6 +9,11 @@ export const HeaderStyled = styled.header`
   & .btn-primary.dropdown-toggle:focus {
     box-shadow: none;
   }
+
+  /* & .dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0; // remove the gap so it doesn't close
+  } */
 `;
 
 export const Wrapper = styled.div`
@@ -77,3 +83,21 @@ export const dropdownStyles = {
   backgroundColor: 'transparent',
   border: 'none',
 };
+
+export const WrapperLinks = styled.div`
+  padding: 0 30px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+`;
+
+export const LinkStyled = styled(Link)`
+  font-size: 16px;
+
+  color: #000;
+
+  &:not(:last-child) {
+    margin-bottom: 5px;
+  }
+`;

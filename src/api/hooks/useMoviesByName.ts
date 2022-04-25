@@ -10,6 +10,7 @@ export const useMoviesByName = (name: string) => {
       onError: (error: any) => {
         toast.error(error.message);
       },
+      enabled: false,
     }
   );
 

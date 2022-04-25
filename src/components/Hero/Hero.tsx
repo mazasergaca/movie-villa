@@ -1,10 +1,7 @@
 import React from 'react';
-import { useQuery } from 'react-query';
 import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
 
-import { getTrendingMovies } from 'api/services/movies.services.ts';
+import { useTrendingMovies } from 'api/hooks/useTrendingMovies.ts';
 import { Section, Container, Poster } from './Hero.style';
 
 // settings for react-slick
@@ -20,17 +17,15 @@ const settings = {
   autoplaySpeed: 5000,
 };
 
-// const arr = ['#04122e', '#320d3d', '#383200'];
-
 const Hero = () => {
-  const { data: movies } = useQuery('trending poster', getTrendingMovies);
+  const { trendingMovies } = useTrendingMovies(1);
 
   return (
     <Section>
       <Container>
         <Slider {...settings}>
-          {movies &&
-            movies.data.results.slice(0, 3).map(movie => (
+          {trendingMovies &&
+            trendingMovies.data.results.slice(0, 3).map(movie => (
               <div key={movie.id}>
                 <Poster color={movie.backdrop_path}></Poster>
               </div>
