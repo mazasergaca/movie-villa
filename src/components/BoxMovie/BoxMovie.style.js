@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const Section = styled.section`
   margin-top: 130px;
@@ -31,7 +32,7 @@ export const Title = styled.h2`
   line-height: 1.16;
 `;
 
-export const Link = styled.a`
+export const LinkStyled = styled(Link)`
   font-family: 'Roboto';
   font-weight: 400;
   font-size: 20px;

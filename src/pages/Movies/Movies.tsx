@@ -18,7 +18,7 @@ import {
 } from './Movies.style';
 
 const Movie = () => {
-  const [value, setValue] = useState('movie');
+  const [value, setValue] = useState('');
   const { moviesByName, refetch } = useMoviesByName(value);
 
   const navigation = useNavigate();

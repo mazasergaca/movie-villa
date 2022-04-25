@@ -30,4 +30,6 @@ export const Name = styled.span`
   font-weight: 700;
   font-size: 18px;
   text-align: center;
+
+  color: #fff;
 `;

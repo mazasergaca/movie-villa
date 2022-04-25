@@ -2,10 +2,10 @@ import { useQuery } from 'react-query';
 import { toast } from 'react-toastify';
 import { getUpcomingMovie } from 'api/services/movies.services.ts';
 
-export const useUpcomingMovies = () => {
-  const { data: upcomingMovies } = useQuery(
+export const useUpcomingMovies = (page: number) => {
+  const { data: upcomingMovies, refetch } = useQuery(
     'upcoming movies',
-    getUpcomingMovie,
+    () => getUpcomingMovie(page),
     {
       onError: (error: any) => {
         toast.error(error.message);
@@ -13,5 +13,5 @@ export const useUpcomingMovies = () => {
     }
   );
 
-  return { upcomingMovies };
+  return { upcomingMovies, refetch };
 };
