@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import { Link } from 'react-router-dom';
 import { Container } from '@mui/material';
@@ -22,6 +23,25 @@ import {
 } from './Header.style';
 
 const Header = () => {
+  const navigation = useNavigate();
+  const location = useLocation();
+  const [value, setValue] = useState('');
+
+  const handleChange = e => {
+    setValue(e.target.value);
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    navigation({
+      ...location,
+      pathname: '/movies',
+      search: `query=${value}&page=1`,
+    });
+
+    setValue('');
+  };
+
   return (
     <HeaderStyled>
       <Container style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -91,9 +111,9 @@ const Header = () => {
             </Item>
           </List>
         </Wrapper>
-        <Form>
+        <Form onSubmit={handleSubmit}>
           <Label>
-            <Input placeholder="Search" />
+            <Input placeholder="Search" onChange={handleChange} value={value} />
           </Label>
           <Button type="submit">
             <AiOutlineSearch color="#fff" size="20px" />

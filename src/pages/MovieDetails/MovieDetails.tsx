@@ -3,10 +3,12 @@ import { useLocation } from 'react-router-dom';
 import { Container } from '@mui/material';
 import Rating from '@mui/material/Rating';
 
+import { useMovieCast } from 'api/hooks/useMovieCast.ts';
 import { useMovieSimilar } from 'api/hooks/useMovieSimilar.ts';
 import { useMovieById } from 'api/hooks/useMovieById.ts';
 import { useMovieVideoById } from 'api/hooks/useMovieVideoById.ts';
 import BoxMovie from 'components/BoxMovie';
+import BoxCast from 'components/BoxCast';
 import makeIdFromSlug from 'services/slug.ts';
 import {
   Wrapper,
@@ -20,6 +22,7 @@ import {
   Logo,
   LogoList,
   WrapperVideo,
+  BackdropInfo,
 } from './MovieDetails.style';
 
 const MovieDetails = () => {
@@ -27,25 +30,28 @@ const MovieDetails = () => {
   const id = makeIdFromSlug(location.pathname);
 
   const { movieById, refetchMovieById } = useMovieById(id);
-  const { movieVideo } = useMovieVideoById(id);
+  const { movieVideo, refetchMovie } = useMovieVideoById(id);
   const { movieSimilar, refetchMoviesSimilar } = useMovieSimilar(id);
+  const { movieCast } = useMovieCast(id);
 
   useEffect(() => {
     refetchMovieById();
     refetchMoviesSimilar();
+    refetchMovie();
     window.scrollTo(0, 0);
-  }, [location, refetchMovieById, refetchMoviesSimilar]);
+  }, [location, refetchMovieById, refetchMoviesSimilar, refetchMovie]);
 
   return (
-    <Container>
-      <Wrapper>
-        {movieById && (
-          <>
+    <>
+      {movieById && (
+        <BackdropInfo img={movieById.data.backdrop_path}>
+          <Container>
             <WrapperInfo>
               <Poster>
                 <img
                   src={`https://image.tmdb.org/t/p/w500/${movieById.data.poster_path}`}
                   alt={movieById?.data.original_title}
+                  width="100%"
                 />
               </Poster>
               <Info>
@@ -83,8 +89,15 @@ const MovieDetails = () => {
                 </LogoList>
               </Info>
             </WrapperInfo>
+          </Container>
+        </BackdropInfo>
+      )}
 
-            <WrapperVideo>
+      <Container>
+        <Wrapper>
+          <BoxCast cast={movieCast} title="Cast and crew" />
+          <WrapperVideo>
+            {movieVideo?.data?.results[0]?.key && (
               <iframe
                 width="853"
                 height="480"
@@ -94,14 +107,14 @@ const MovieDetails = () => {
                 allowFullScreen
                 title="Embedded youtube"
               />
-            </WrapperVideo>
-          </>
-        )}
-        {movieSimilar && (
-          <BoxMovie movies={movieSimilar} title="Similar movies" path="/" />
-        )}
-      </Wrapper>
-    </Container>
+            )}
+          </WrapperVideo>
+          {movieSimilar && (
+            <BoxMovie movies={movieSimilar} title="Similar movies" path="/" />
+          )}
+        </Wrapper>
+      </Container>
+    </>
   );
 };
 

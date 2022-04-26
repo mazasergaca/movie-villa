@@ -12,7 +12,6 @@ const Trending = () => {
   const [page, setPage] = useState(Number(searchParam) || 1);
 
   const { trendingMovies, refetch } = useTrendingMovies(page);
-  console.log(trendingMovies);
 
   const handleClick = (page: number) => {
     setPage(page);

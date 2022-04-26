@@ -4,18 +4,33 @@ export const Wrapper = styled.div`
   padding: 50px 0 0 0;
 `;
 
-export const WrapperInfo = styled.div`
-  margin-top: 30px;
+export const BackdropInfo = styled.div`
+  margin-top: 40px;
+  margin-bottom: 40px;
+  height: 750px;
+
   display: flex;
+  align-items: center;
 
   background-color: #111;
+  background-image: ${props =>
+    `linear-gradient(83deg, rgba(0,0,0,0.6674019949776786) 0%, rgba(0,0,0,0.7486344879748774) 100%),url(https://image.tmdb.org/t/p/original/${props.img})`};
+  background-size: cover;
+`;
+
+export const WrapperInfo = styled.div`
+  display: flex;
+
+  /* background-color: #111; */
 `;
 
 export const Poster = styled.div`
-  width: 500px;
-  height: 750px;
+  width: 450px;
+  height: 650px;
   flex-shrink: 0;
 
+  overflow: hidden;
+  border-radius: 10px;
   background-color: #111;
 `;
 
@@ -29,6 +44,7 @@ export const Info = styled.div`
 
 export const Title = styled.h1`
   text-align: center;
+  font-family: 'DM Sans';
 `;
 
 export const Genre = styled.span`

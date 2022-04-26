@@ -5,32 +5,39 @@ import { useMoviesByName } from 'api/hooks/useMoviesByName.ts';
 import { Container } from '@mui/material';
 import { AiOutlineSearch } from 'react-icons/ai';
 
-import ItemMovie from 'components/ItemMovie';
-import {
-  Wrapper,
-  Form,
-  Label,
-  Input,
-  Button,
-  InfoText,
-  List,
-  Item,
-} from './Movies.style';
+import BoxPage from 'components/BoxPage';
+import { Wrapper, Form, Label, Input, Button, InfoText } from './Movies.style';
 
 const Movie = () => {
-  const [value, setValue] = useState('');
-  const { moviesByName, refetch } = useMoviesByName(value);
-
   const navigation = useNavigate();
   const location = useLocation();
   const searchParam = new URLSearchParams(location.search).get('query');
+  const searchParamPage = new URLSearchParams(location.search).get('page');
+  const [value, setValue] = useState(searchParam || '');
+  const [page, setPage] = useState(Number(searchParamPage) || 1);
+
+  const { moviesByName, refetch } = useMoviesByName(value, page);
 
   useEffect(() => {
-    if (searchParam) setValue(searchParam);
-  }, [searchParam]);
+    if (searchParam) {
+      setValue(searchParam);
+      refetch();
+      window.scrollTo(0, 0);
+    }
+  }, [searchParam, refetch]);
+
+  useEffect(() => {
+    refetch();
+    window.scrollTo(0, 0);
+  }, [page, refetch]);
 
   const handleChange = e => {
     setValue(e.target.value);
+  };
+
+  const handleClick = (page: number) => {
+    setPage(page);
+    navigation({ ...location, search: `query=${value}&page=${page}` });
   };
 
   const handleSubmit = e => {
@@ -39,7 +46,8 @@ const Movie = () => {
       toast.info('Please input text');
       return;
     }
-    navigation({ ...location, search: `query=${value}` });
+    setPage(1);
+    navigation({ ...location, search: `query=${value}&page=1` });
     refetch();
   };
 
@@ -64,17 +72,11 @@ const Movie = () => {
           your query
         </InfoText>
         {moviesByName && (
-          <List>
-            {moviesByName?.data.results.map(movie => (
-              <Item key={movie.id}>
-                <ItemMovie
-                  src={movie.poster_path}
-                  date={movie.release_date || movie.first_air_date}
-                  name={movie.original_title || movie.original_name}
-                />
-              </Item>
-            ))}
-          </List>
+          <BoxPage
+            movies={moviesByName}
+            page={page}
+            handleClick={handleClick}
+          />
         )}
       </Wrapper>
     </Container>

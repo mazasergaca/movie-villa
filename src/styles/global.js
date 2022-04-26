@@ -12,7 +12,7 @@ export const Global = createGlobalStyle`
   }
 
   body {
-    font-family: 'DM Sans';
+    font-family: 'Roboto';
     font-size: 12px;
     line-height: 1.33;
 

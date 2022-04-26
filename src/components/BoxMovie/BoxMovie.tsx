@@ -23,7 +23,7 @@ const settings = {
   swipeToSlide: true,
 };
 //make slug for pathname
-const makeSlug = string => slugify(string, { lower: true });
+const makeSlug = (string: string) => slugify(string, { lower: true });
 
 const BoxMovie: FC<BoxMovieProps> = ({ movies, title, path }) => {
   return (
@@ -31,7 +31,7 @@ const BoxMovie: FC<BoxMovieProps> = ({ movies, title, path }) => {
       <Container>
         <Wrapper>
           <Title>{title}</Title>
-          <LinkStyled to={path}>View all</LinkStyled>
+          {path && <LinkStyled to={path}>View all</LinkStyled>}
         </Wrapper>
         <Slider {...settings}>
           {movies &&
