@@ -21,9 +21,9 @@ const BoxPage = ({ title, movies, handleClick, page }) => {
   return (
     <Container>
       <Wrapper>
-        <Title>{title}</Title>
+        {title && <Title>{title}</Title>}
         <Page>
-          Page {movies?.data.page} of {movies?.data.total_pages}
+          Page {page} of {movies?.data.total_pages}
         </Page>
         <List>
           {movies?.data.results.map(movie => (

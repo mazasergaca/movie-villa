@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { getMovieVideoById } from 'api/services/movies.services.ts';
 
 export const useMovieVideoById = id => {
-  const { data: movieVideo } = useQuery(
+  const { data: movieVideo, refetch: refetchMovie } = useQuery(
     'movie video',
     () => getMovieVideoById(id),
     {
@@ -13,5 +13,5 @@ export const useMovieVideoById = id => {
     }
   );
 
-  return { movieVideo };
+  return { movieVideo, refetchMovie };
 };

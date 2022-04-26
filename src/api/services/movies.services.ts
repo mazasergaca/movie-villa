@@ -83,3 +83,35 @@ export const getMovieSimilar = async (id: string) => {
     },
   });
 };
+
+export const getMovieCast = async (id: string) => {
+  return await axios(`/movie/${id}/credits`, {
+    params: {
+      api_key: KEY,
+    },
+  });
+};
+
+export const getPersonDetails = async (id: string) => {
+  return await axios(`/person/${id}`, {
+    params: {
+      api_key: KEY,
+    },
+  });
+};
+
+export const getPersonMovies = async (id: string) => {
+  return await axios(`/person/${id}/movie_credits`, {
+    params: {
+      api_key: KEY,
+    },
+  });
+};
+
+export const getPersonImages = async (id: string) => {
+  return await axios(`/person/${id}/images`, {
+    params: {
+      api_key: KEY,
+    },
+  });
+};
