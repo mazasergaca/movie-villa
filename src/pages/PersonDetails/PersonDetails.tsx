@@ -4,12 +4,15 @@ import Slider from 'react-slick';
 import { Link } from 'react-router-dom';
 import slugify from 'slugify';
 import { Container } from '@mui/material';
+import ImageList from '@mui/material/ImageList';
+import ImageListItem from '@mui/material/ImageListItem';
 
 import makeIdFromSlug from 'services/slug.ts';
 import { usePersonDetails } from 'api/hooks/usePersonDetails.ts';
 import { usePersonMovies } from 'api/hooks/usePersonMovies.ts';
 import { usePersonImages } from 'api/hooks/usePersonImages.ts';
 
+import noPoster from '../../assets/not-found-poster.png';
 import {
   Wrapper,
   WrapperInfo,
@@ -24,6 +27,7 @@ import {
   Item,
   Poster,
   TitleMovie,
+  WrapperGallery,
 } from './PersonDetails.style';
 
 // settings for react-slick
@@ -48,8 +52,6 @@ const PersonDetails = () => {
   const { personMovies } = usePersonMovies(id);
   const { personImages } = usePersonImages(id);
 
-  console.log(personImages);
-
   useEffect(() => window.scrollTo(0, 0));
 
   const handleClickBtnMore = () => setShowMore(!showMore);
@@ -62,8 +64,12 @@ const PersonDetails = () => {
             <WrapperInfo>
               <Avatar>
                 <img
-                  src={`https://image.tmdb.org/t/p/w500/${personDetails.data.profile_path}`}
-                  alt={personDetails.data.name}
+                  src={
+                    personDetails?.data.profile_path
+                      ? `https://image.tmdb.org/t/p/w500/${personDetails.data.profile_path}`
+                      : noPoster
+                  }
+                  alt={personDetails?.data.name}
                   width="100%"
                 />
               </Avatar>
@@ -74,32 +80,46 @@ const PersonDetails = () => {
               <InfoValue>
                 {personDetails.data.gender === '1' ? 'Female' : 'Male'}
               </InfoValue>
-              <InfoName>Born</InfoName>
-              <InfoValue>{personDetails.data.birthday}</InfoValue>
-              <InfoValue>{personDetails.data.place_of_birth}</InfoValue>
+              {personDetails.data.birthday && (
+                <>
+                  <InfoName>Born</InfoName>
+                  <InfoValue>{personDetails.data.birthday}</InfoValue>
+                  <InfoValue>{personDetails.data.place_of_birth}</InfoValue>
+                </>
+              )}
               {personDetails.data.deathday && (
                 <>
                   <InfoName>Died</InfoName>
                   <InfoValue>{personDetails.data.deathday}</InfoValue>
                 </>
               )}
-              <InfoName>Also Known As</InfoName>
+              {!!personDetails.data.also_known_as.length && (
+                <>
+                  <InfoName>Also Known As</InfoName>
 
-              {personDetails.data.also_known_as.map((name, index) => (
-                <InfoValue key={index}>{name}</InfoValue>
-              ))}
+                  {personDetails.data.also_known_as.map((name, index) => (
+                    <InfoValue key={index}>{name}</InfoValue>
+                  ))}
+                </>
+              )}
             </WrapperInfo>
             <WrapperBiography>
               <Name>{personDetails.data.name}</Name>
-              <TitleInfo>Biography</TitleInfo>
-              <InfoValue>
-                {showMore
-                  ? personDetails.data.biography
-                  : personDetails.data.biography.substring(0, 250)}{' '}
-                <ButtonShowMore onClick={handleClickBtnMore}>
-                  {showMore ? 'Show less' : 'Show more'}
-                </ButtonShowMore>
-              </InfoValue>
+              {personDetails.data.biography && (
+                <>
+                  <TitleInfo>Biography</TitleInfo>
+                  <InfoValue>
+                    {showMore
+                      ? personDetails.data.biography
+                      : personDetails.data.biography.substring(0, 250)}{' '}
+                    {personDetails.data.biography.length > 250 && (
+                      <ButtonShowMore onClick={handleClickBtnMore}>
+                        {showMore ? 'Show less' : 'Show more'}
+                      </ButtonShowMore>
+                    )}
+                  </InfoValue>
+                </>
+              )}
               <WrapperSlider>
                 <TitleInfo>Known For</TitleInfo>
                 <Slider {...settings}>
@@ -116,7 +136,11 @@ const PersonDetails = () => {
                           <Item>
                             <Poster>
                               <img
-                                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                                src={
+                                  movie.poster_path
+                                    ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                                    : noPoster
+                                }
                                 alt={movie.title || movie.original_title}
                                 width="100%"
                               />
@@ -129,8 +153,27 @@ const PersonDetails = () => {
                       </div>
                     ))}
                 </Slider>
-                {personImages && <></>}
               </WrapperSlider>
+              {personImages?.data?.profiles.length > 2 && (
+                <WrapperGallery>
+                  <ImageList
+                    sx={{ width: 500, height: 450 }}
+                    variant="woven"
+                    cols={3}
+                    gap={8}
+                  >
+                    {personImages.data.profiles.map(item => (
+                      <ImageListItem key={item.file_path}>
+                        <img
+                          src={`https://image.tmdb.org/t/p/w500${item.file_path}`}
+                          alt={personDetails.data.name}
+                          loading="lazy"
+                        />
+                      </ImageListItem>
+                    ))}
+                  </ImageList>
+                </WrapperGallery>
+              )}
             </WrapperBiography>
           </>
         )}

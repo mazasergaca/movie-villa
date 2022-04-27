@@ -13,7 +13,7 @@ export const Poster = styled.div`
   overflow: hidden;
 
   border-radius: 10px;
-  background-color: ${props => props.color};
+  background-color: #111;
 `;
 
 export const Date = styled.span`

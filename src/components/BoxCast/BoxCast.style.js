@@ -30,6 +30,10 @@ export const Poster = styled.div`
   height: 207px;
   margin-bottom: 10px;
 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   overflow: hidden;
   border-radius: 10px;
   background-color: #111;

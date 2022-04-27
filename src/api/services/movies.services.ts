@@ -115,3 +115,19 @@ export const getPersonImages = async (id: string) => {
     },
   });
 };
+
+export const getReviewsMovie = async (id: string) => {
+  return await axios(`/movie/${id}/reviews`, {
+    params: {
+      api_key: KEY,
+    },
+  });
+};
+
+export const getImagesMovie = async (id: string) => {
+  return await axios(`/movie/${id}/images`, {
+    params: {
+      api_key: KEY,
+    },
+  });
+};

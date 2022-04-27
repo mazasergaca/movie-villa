@@ -11,10 +11,12 @@ export const BackdropInfo = styled.div`
 
   display: flex;
   align-items: center;
-
-  background-color: #111;
+  background-color: #222;
   background-image: ${props =>
-    `linear-gradient(83deg, rgba(0,0,0,0.6674019949776786) 0%, rgba(0,0,0,0.7486344879748774) 100%),url(https://image.tmdb.org/t/p/original/${props.img})`};
+    props.img
+      ? `linear-gradient(83deg, rgba(0,0,0,0.6674019949776786) 0%, rgba(0,0,0,0.7486344879748774) 100%),url(https://image.tmdb.org/t/p/original/${props.img})`
+      : 'none'}
+    
   background-size: cover;
 `;
 
@@ -84,8 +86,14 @@ export const Logo = styled.li`
   border: 1px solid #fff;
 `;
 
-export const WrapperVideo = styled.div`
+export const WrapperMedia = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   margin-top: 50px;
+
+  color: #000;
+`;
+
+export const WrapperReviews = styled.div`
+  background-color: #fff;
 `;

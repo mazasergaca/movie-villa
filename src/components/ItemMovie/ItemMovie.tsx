@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 
 import { Item, Poster, Date, Name } from './ItemMovie.style';
 
+import noPoster from '../../assets/not-found-poster.png';
 interface ItemMovieProps {
   src: string;
   date: string;
@@ -13,7 +14,7 @@ const ItemMovie: FC<ItemMovieProps> = ({ src, date, name }) => {
     <Item>
       <Poster>
         <img
-          src={`https://image.tmdb.org/t/p/w500${src}`}
+          src={src ? `https://image.tmdb.org/t/p/w500${src}` : noPoster}
           width="100%"
           alt={name}
         />

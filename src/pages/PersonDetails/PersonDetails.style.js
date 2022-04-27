@@ -64,7 +64,7 @@ export const ButtonShowMore = styled.button`
 
 export const WrapperSlider = styled.div`
   width: 700px;
-  margin: 40px auto 0;
+  margin: 40px auto;
 
   // classes from the react-slick library
   & .slick-prev:before {
@@ -90,6 +90,8 @@ export const Poster = styled.div`
 
   overflow: hidden;
   border-radius: 10px;
+
+  background-color: #111;
 `;
 
 export const TitleMovie = styled.span`
@@ -97,4 +99,9 @@ export const TitleMovie = styled.span`
   text-align: center;
 
   color: #fff;
+`;
+
+export const WrapperGallery = styled.div`
+  display: flex;
+  justify-content: center;
 `;
