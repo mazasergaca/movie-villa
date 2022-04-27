@@ -5,6 +5,7 @@ import slugify from 'slugify';
 
 import { Container } from '@mui/material';
 
+import noPhoto from 'assets/no_photo.png';
 import {
   Wrapper,
   Title,
@@ -45,7 +46,11 @@ const BoxCast = ({ cast, title }) => {
                 <Item>
                   <Poster>
                     <img
-                      src={`https://image.tmdb.org/t/p/w500${actor.profile_path}`}
+                      src={
+                        actor.profile_path
+                          ? `https://image.tmdb.org/t/p/w500${actor.profile_path}`
+                          : noPhoto
+                      }
                       width="100%"
                       alt={actor.name || actor.original_name}
                     />
