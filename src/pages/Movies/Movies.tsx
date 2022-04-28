@@ -6,7 +6,7 @@ import { Container } from '@mui/material';
 import { AiOutlineSearch } from 'react-icons/ai';
 
 import BoxPage from 'components/BoxPage';
-import { Wrapper, Form, Label, Input, Button, InfoText } from './Movies.style';
+import { Wrapper, Form, Label, Input, Button, InfoText } from './Movies.styles';
 
 const Movie = () => {
   const navigation = useNavigate();

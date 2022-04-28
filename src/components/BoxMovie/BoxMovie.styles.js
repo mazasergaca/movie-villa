@@ -39,4 +39,9 @@ export const LinkStyled = styled(Link)`
   line-height: 1.16;
 
   color: #ffffff;
+  transition: color 250ms;
+
+  &:hover {
+    color: #ff3b5f;
+  }
 `;

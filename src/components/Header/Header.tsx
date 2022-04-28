@@ -3,7 +3,6 @@ import { useNavigate, useLocation } from 'react-router-dom';
 
 import { Link } from 'react-router-dom';
 import { Container } from '@mui/material';
-import { Dropdown } from 'react-bootstrap';
 import { AiOutlineSearch } from 'react-icons/ai';
 
 import logo from 'assets/logo.svg';
@@ -11,16 +10,14 @@ import logo from 'assets/logo.svg';
 import {
   HeaderStyled,
   Wrapper,
-  List,
-  Item,
   Form,
   Label,
   Input,
   Button,
-  dropdownStyles,
   WrapperLinks,
+  Item,
   LinkStyled,
-} from './Header.style';
+} from './Header.styles';
 
 const Header = () => {
   const navigation = useNavigate();
@@ -49,67 +46,20 @@ const Header = () => {
           <Link to="/">
             <img src={logo} alt="logo" width="48" />
           </Link>
-          <List>
+          <WrapperLinks>
             <Item>
-              <Dropdown>
-                <Dropdown.Toggle style={dropdownStyles}>
-                  Movies
-                  <Dropdown.Menu>
-                    <WrapperLinks>
-                      <LinkStyled to="movies/trending">Trending</LinkStyled>
-                      <LinkStyled to="movies/popular">Popular</LinkStyled>
-                      <LinkStyled to="movies/top_rated">Top rated</LinkStyled>
-                      <LinkStyled to="movies/upcoming">Upcoming</LinkStyled>
-                    </WrapperLinks>
-                  </Dropdown.Menu>
-                </Dropdown.Toggle>
-              </Dropdown>
+              <LinkStyled to="movies/trending">Trending</LinkStyled>
             </Item>
             <Item>
-              <Dropdown>
-                <Dropdown.Toggle style={dropdownStyles}>
-                  Tv Show
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <Dropdown.Item href="#">Action</Dropdown.Item>
-                  <Dropdown.Item href="#">Another action</Dropdown.Item>
-                  <Dropdown.Item href="#">Something else</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
+              <LinkStyled to="movies/popular">Popular</LinkStyled>
             </Item>
             <Item>
-              <Dropdown>
-                <Dropdown.Toggle style={dropdownStyles}>Genres</Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <Dropdown.Item href="#">Action</Dropdown.Item>
-                  <Dropdown.Item href="#">Another action</Dropdown.Item>
-                  <Dropdown.Item href="#">Something else</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
+              <LinkStyled to="movies/top_rated">Top rated</LinkStyled>
             </Item>
             <Item>
-              <Dropdown>
-                <Dropdown.Toggle style={dropdownStyles}>
-                  Web series
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <Dropdown.Item href="#">Action</Dropdown.Item>
-                  <Dropdown.Item href="#">Another action</Dropdown.Item>
-                  <Dropdown.Item href="#">Something else</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
+              <LinkStyled to="movies/upcoming">Upcoming</LinkStyled>
             </Item>
-            <Item>
-              <Dropdown>
-                <Dropdown.Toggle style={dropdownStyles}>Anime</Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <Dropdown.Item href="#">Action</Dropdown.Item>
-                  <Dropdown.Item href="#">Another action</Dropdown.Item>
-                  <Dropdown.Item href="#">Something else</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </Item>
-          </List>
+          </WrapperLinks>
         </Wrapper>
         <Form onSubmit={handleSubmit}>
           <Label>

@@ -2,7 +2,7 @@ import React from 'react';
 import Slider from 'react-slick';
 
 import { useTrendingMovies } from 'api/hooks/useTrendingMovies.ts';
-import { Section, Container, Poster } from './Hero.style';
+import { Section, Container, Poster } from './Hero.styles';
 
 // settings for react-slick
 const settings = {

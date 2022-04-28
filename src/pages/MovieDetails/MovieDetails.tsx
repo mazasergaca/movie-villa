@@ -1,14 +1,15 @@
-import React, { useEffect, useState, SyntheticEvent } from 'react';
+import React, { useEffect, useState, ReactNode } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Container } from '@mui/material';
 import Rating from '@mui/material/Rating';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
+import ImageList from '@mui/material/ImageList';
+import ImageListItem from '@mui/material/ImageListItem';
 import { MdReviews } from 'react-icons/md';
 import { IoMdPhotos } from 'react-icons/io';
 
+import noPhoto from 'assets/no_photo.png';
 import noPoster from '../../assets/not-found-poster.png';
 import { useMovieImages } from 'api/hooks/useMovieImages.ts';
 import { useReviewsMovies } from 'api/hooks/useReviewsMovie.ts';
@@ -32,11 +33,18 @@ import {
   LogoList,
   WrapperMedia,
   BackdropInfo,
-  WrapperReviews,
-} from './MovieDetails.style';
+  ListReviews,
+  ItemReview,
+  AvatarRewiew,
+  NameReview,
+  Review,
+  WrapperVideo,
+  InfoReview,
+  NoReviews,
+} from './MovieDetails.styles';
 
 interface TabPanelProps {
-  children?: React.ReactNode;
+  children?: ReactNode;
   index: number;
   value: number;
 }
@@ -52,11 +60,7 @@ const TabPanel = (props: TabPanelProps) => {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
+      {value === index && children}
     </div>
   );
 };
@@ -70,34 +74,32 @@ const a11yProps = (index: number) => {
 const MovieDetails = () => {
   const [value, setValue] = useState(0);
 
-  const handleChange = (event: SyntheticEvent, newValue: number) => {
+  const handleChange = (_, newValue: number) => {
     setValue(newValue);
   };
 
   const location = useLocation();
   const id = makeIdFromSlug(location.pathname);
 
-  const { movieById, refetchMovieById } = useMovieById(id);
-  const { movieVideo, refetchMovie } = useMovieVideoById(id);
-  const { movieSimilar, refetchMoviesSimilar } = useMovieSimilar(id);
-  const { movieCast } = useMovieCast(id);
-  const { reviewsMovie } = useReviewsMovies(id);
-  const { movieImages } = useMovieImages(id);
-
-  console.log(movieImages);
-
-  console.log(reviewsMovie);
+  const { movieById, refetchMovieById, isFetchingMovieById } = useMovieById(id);
+  const { movieVideo, refetchMovieVideo, isFetchingMovieVideo } =
+    useMovieVideoById(id);
+  const { movieSimilar, refetchMoviesSimilar, isFetchingMoviesSimilar } =
+    useMovieSimilar(id);
+  const { movieCast, isFetchingMovieCast } = useMovieCast(id);
+  const { reviewsMovie, isFetchingReviewsMovies } = useReviewsMovies(id);
+  const { movieImages, isFetchingMovieImages } = useMovieImages(id);
 
   useEffect(() => {
     refetchMovieById();
     refetchMoviesSimilar();
-    refetchMovie();
+    refetchMovieVideo();
     window.scrollTo(0, 0);
-  }, [location, refetchMovieById, refetchMoviesSimilar, refetchMovie]);
+  }, [location, refetchMovieById, refetchMoviesSimilar, refetchMovieVideo]);
 
   return (
     <>
-      {movieById && (
+      {movieById && !isFetchingMovieById && (
         <BackdropInfo img={movieById.data.backdrop_path}>
           <Container>
             <WrapperInfo>
@@ -161,37 +163,103 @@ const MovieDetails = () => {
 
       <Container>
         <Wrapper>
-          <BoxCast cast={movieCast} title="Cast and crew" />
+          {movieCast && !isFetchingMovieCast && (
+            <BoxCast cast={movieCast} title="Cast and crew" />
+          )}
+
           <WrapperMedia>
-            <WrapperReviews>
-              <Tabs
-                value={value}
-                onChange={handleChange}
-                aria-label="icon label tabs example"
-              >
-                <Tab icon={<MdReviews />} label="REVIEWS" {...a11yProps(0)} />
-                <Tab icon={<IoMdPhotos />} label="POSTERS" {...a11yProps(1)} />
-              </Tabs>
-              <TabPanel value={value} index={0}>
-                11111
-              </TabPanel>
-              <TabPanel value={value} index={1}>
-                222222
-              </TabPanel>
-            </WrapperReviews>
-            {movieVideo?.data?.results[0]?.key && (
-              <iframe
-                width="853"
-                height="480"
-                src={`https://www.youtube-nocookie.com/embed/${movieVideo?.data.results[0].key}`}
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                title="Embedded youtube"
-              />
+            {movieVideo?.data?.results[0]?.key && !isFetchingMovieVideo && (
+              <WrapperVideo>
+                <iframe
+                  width="853"
+                  height="480"
+                  src={`https://www.youtube-nocookie.com/embed/${movieVideo?.data.results[0].key}`}
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  title="Embedded youtube"
+                />
+              </WrapperVideo>
             )}
+
+            {!isFetchingReviewsMovies &&
+              !isFetchingMovieImages &&
+              movieImages &&
+              reviewsMovie && (
+                <>
+                  <Tabs
+                    value={value}
+                    onChange={handleChange}
+                    aria-label="icon label tabs example"
+                  >
+                    <Tab
+                      style={{ color: '#fff' }}
+                      icon={<MdReviews />}
+                      label="REVIEWS"
+                      {...a11yProps(0)}
+                    />
+                    {!!movieImages?.data.posters.length && (
+                      <Tab
+                        style={{ color: '#fff' }}
+                        icon={<IoMdPhotos />}
+                        label="POSTERS"
+                        {...a11yProps(1)}
+                      />
+                    )}
+                  </Tabs>
+                  <TabPanel value={value} index={0}>
+                    {!!reviewsMovie?.data.results.length ? (
+                      <ListReviews>
+                        {reviewsMovie.data.results.map(review => (
+                          <ItemReview key={review.id}>
+                            <InfoReview>
+                              <AvatarRewiew>
+                                <img
+                                  src={
+                                    review.author_details.avatar_path?.includes(
+                                      'http'
+                                    )
+                                      ? review.author_details.avatar_path?.substring(
+                                          1
+                                        )
+                                      : review.author_details.avatar_path
+                                      ? `https://image.tmdb.org/t/p/w500/${review.author_details.avatar_path}`
+                                      : noPhoto
+                                  }
+                                  alt={review.author}
+                                  width="50px"
+                                />
+                              </AvatarRewiew>
+                              <NameReview>{review.author}</NameReview>
+                            </InfoReview>
+                            <Review>{review.content}</Review>
+                          </ItemReview>
+                        ))}
+                      </ListReviews>
+                    ) : (
+                      <NoReviews>No reviews</NoReviews>
+                    )}
+                  </TabPanel>
+
+                  <TabPanel value={value} index={1}>
+                    {movieImages && (
+                      <ImageList sx={{ width: '100%', height: 500 }} cols={3}>
+                        {movieImages.data.posters.map(image => (
+                          <ImageListItem key={image.file_path}>
+                            <img
+                              src={`https://image.tmdb.org/t/p/w500/${image.file_path}`}
+                              alt={movieById?.data.original_title}
+                              loading="lazy"
+                            />
+                          </ImageListItem>
+                        ))}
+                      </ImageList>
+                    )}
+                  </TabPanel>
+                </>
+              )}
           </WrapperMedia>
-          {movieSimilar && (
+          {movieSimilar && !isFetchingMoviesSimilar && (
             <BoxMovie movies={movieSimilar} title="Similar movies" path="/" />
           )}
         </Wrapper>

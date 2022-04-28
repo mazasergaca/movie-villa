@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 
-export const FooterStyled = styled.footer``;
-
 export const Wrapper = styled.div`
   padding: 130px 0;
 
@@ -21,6 +19,14 @@ export const Item = styled.li`
   font-size: 18px;
   &:not(:last-child) {
     margin-right: 48px;
+  }
+`;
+export const Link = styled.a`
+  color: #fff;
+  transition: color 250ms;
+
+  &:hover {
+    color: #ff3b5f;
   }
 `;
 

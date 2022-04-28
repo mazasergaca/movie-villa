@@ -12,7 +12,7 @@ import {
   List,
   Item,
   WrapperPagination,
-} from './BoxPage.style';
+} from './BoxPage.styles';
 
 //make slug for pathname
 const makeSlug = string => slugify(string, { lower: true });

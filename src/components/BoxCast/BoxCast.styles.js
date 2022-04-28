@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   width: 100%;
+
   // classes from the react-slick library
   & .slick-prev:before {
     content: '❮';
@@ -26,6 +27,7 @@ export const Item = styled.div`
 `;
 
 export const Poster = styled.div`
+  position: relative;
   width: 138px;
   height: 207px;
   margin-bottom: 10px;
@@ -39,9 +41,33 @@ export const Poster = styled.div`
   background-color: #111;
 `;
 
+export const Backdrop = styled.div`
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: transparent;
+  backdrop-filter: blur(0px);
+  transition: backdrop-filter 250ms, color 250ms;
+
+  &:hover {
+    backdrop-filter: blur(4px);
+    color: #fff;
+  }
+`;
+
 export const Name = styled.span`
   font-size: 18px;
 
   text-align: center;
   color: #fff;
+
+  &:hover {
+    color: #ff3b5f;
+  }
 `;

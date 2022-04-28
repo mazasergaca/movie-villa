@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
+import { AiFillEye } from 'react-icons/ai';
 
-import { Item, Poster, Date, Name } from './ItemMovie.style';
+import { Item, Poster, Date, Name, Backdrop } from './ItemMovie.styles';
 
 import noPoster from '../../assets/not-found-poster.png';
 interface ItemMovieProps {
@@ -18,6 +19,9 @@ const ItemMovie: FC<ItemMovieProps> = ({ src, date, name }) => {
           width="100%"
           alt={name}
         />
+        <Backdrop>
+          <AiFillEye size="34px" />
+        </Backdrop>
       </Poster>
       <Date>{date}</Date>
       <Name>{name}</Name>

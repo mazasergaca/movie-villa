@@ -28,7 +28,7 @@ import {
   Poster,
   TitleMovie,
   WrapperGallery,
-} from './PersonDetails.style';
+} from './PersonDetails.styles';
 
 // settings for react-slick
 const settings = {
@@ -48,7 +48,7 @@ const PersonDetails = () => {
   const location = useLocation();
   const id = makeIdFromSlug(location.pathname);
 
-  const { personDetails } = usePersonDetails(id);
+  const { personDetails, isFetchingPersonDetails } = usePersonDetails(id);
   const { personMovies } = usePersonMovies(id);
   const { personImages } = usePersonImages(id);
 
@@ -59,7 +59,7 @@ const PersonDetails = () => {
   return (
     <Container>
       <Wrapper>
-        {personDetails && (
+        {personDetails && !isFetchingPersonDetails && (
           <>
             <WrapperInfo>
               <Avatar>

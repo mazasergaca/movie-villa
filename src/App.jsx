@@ -1,5 +1,4 @@
 import React, { lazy, Suspense } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
@@ -19,6 +18,7 @@ const TopRatedMovies = lazy(() => import('./pages/TopRatedMovies'));
 const UpcomingMovies = lazy(() => import('./pages/UpcomingMovies'));
 const MovieDetails = lazy(() => import('./pages/MovieDetails'));
 const PersonDetails = lazy(() => import('./pages/PersonDetails'));
+const NotFound = lazy(() => import('./pages/NotFound'));
 
 export const App = () => {
   return (
@@ -35,6 +35,7 @@ export const App = () => {
           <Route path="movies/top_rated" element={<TopRatedMovies />} />
           <Route path="movies/upcoming" element={<UpcomingMovies />} />
           <Route path="movies/person/:slag" element={<PersonDetails />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
       <Footer />
