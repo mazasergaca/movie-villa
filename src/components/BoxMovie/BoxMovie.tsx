@@ -6,7 +6,7 @@ import slugify from 'slugify';
 import { Container } from '@mui/material';
 
 import ItemMovie from 'components/ItemMovie/ItemMovie.tsx';
-import { Section, Wrapper, Title, LinkStyled } from './BoxMovie.style';
+import { Section, Wrapper, Title, LinkStyled } from './BoxMovie.styles';
 
 interface BoxMovieProps {
   title: string;

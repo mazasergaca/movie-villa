@@ -24,14 +24,6 @@ export const getPopularMovies = async (page: number) => {
   });
 };
 
-export const getPopularTv = async () => {
-  return await axios('/tv/popular', {
-    params: {
-      api_key: KEY,
-    },
-  });
-};
-
 export const getRatedMovies = async (page: number) => {
   return await axios('/movie/top_rated', {
     params: {

@@ -60,6 +60,12 @@ export const ButtonShowMore = styled.button`
   border: none;
   background-color: transparent;
   color: #ff3b5f;
+  cursor: pointer;
+  transition: color 250ms;
+
+  &:hover {
+    color: #ff5e7c;
+  }
 `;
 
 export const WrapperSlider = styled.div`

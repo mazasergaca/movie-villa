@@ -12,12 +12,15 @@ export const Wrapper = styled.div`
 export const Title = styled.h1`
   margin-bottom: 30px;
 
+  font-size: 36px;
   text-align: center;
 `;
 
 export const Page = styled.p`
   margin-bottom: 15px;
   margin-left: 10px;
+
+  font-size: 14px;
 `;
 
 export const List = styled.ul`
