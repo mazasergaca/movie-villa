@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Slider from 'react-slick';
 import { Link } from 'react-router-dom';
@@ -18,6 +18,7 @@ import {
   WrapperInfo,
   WrapperBiography,
   Name,
+  NameMobile,
   Avatar,
   TitleInfo,
   InfoName,
@@ -32,12 +33,25 @@ import {
 
 // settings for react-slick
 const settings = {
-  dots: true,
   infinite: false,
   speed: 500,
   slidesToScroll: 1,
   slidesToShow: 5,
   swipeToSlide: true,
+  responsive: [
+    {
+      breakpoint: 1080,
+      settings: {
+        slidesToShow: 4,
+      },
+    },
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 2,
+      },
+    },
+  ],
 };
 //make slug for pathname
 const makeSlug = (string: string) => slugify(string, { lower: true });
@@ -51,8 +65,6 @@ const PersonDetails = () => {
   const { personDetails, isFetchingPersonDetails } = usePersonDetails(id);
   const { personMovies } = usePersonMovies(id);
   const { personImages } = usePersonImages(id);
-
-  useEffect(() => window.scrollTo(0, 0));
 
   const handleClickBtnMore = () => setShowMore(!showMore);
 
@@ -73,6 +85,7 @@ const PersonDetails = () => {
                   width="100%"
                 />
               </Avatar>
+              <NameMobile>{personDetails.data.name}</NameMobile>
               <TitleInfo>Personal Info</TitleInfo>
               <InfoName>Known For</InfoName>
               <InfoValue>{personDetails.data.known_for_department}</InfoValue>

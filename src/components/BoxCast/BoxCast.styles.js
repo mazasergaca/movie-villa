@@ -62,12 +62,16 @@ export const Backdrop = styled.div`
 `;
 
 export const Name = styled.span`
-  font-size: 18px;
+  font-size: 14px;
 
   text-align: center;
   color: #fff;
 
   &:hover {
     color: #ff3b5f;
+  }
+
+  @media screen and (min-width: 480px) {
+    font-size: 18px;
   }
 `;

@@ -23,6 +23,26 @@ const settings = {
   slidesToScroll: 1,
   slidesToShow: 7,
   swipeToSlide: true,
+  responsive: [
+    {
+      breakpoint: 1080,
+      settings: {
+        slidesToShow: 4,
+      },
+    },
+    {
+      breakpoint: 768,
+      settings: {
+        slidesToShow: 3,
+      },
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 2,
+      },
+    },
+  ],
 };
 //make slug for pathname
 const makeSlug = (string: string) => slugify(string, { lower: true });

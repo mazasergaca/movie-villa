@@ -41,6 +41,7 @@ import {
   WrapperVideo,
   InfoReview,
   NoReviews,
+  Iframe,
 } from './MovieDetails.styles';
 
 interface TabPanelProps {
@@ -170,9 +171,7 @@ const MovieDetails = () => {
           <WrapperMedia>
             {movieVideo?.data?.results[0]?.key && !isFetchingMovieVideo && (
               <WrapperVideo>
-                <iframe
-                  width="853"
-                  height="480"
+                <Iframe
                   src={`https://www.youtube-nocookie.com/embed/${movieVideo?.data.results[0].key}`}
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

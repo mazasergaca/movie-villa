@@ -30,7 +30,7 @@ const Home = () => {
       />
       <BoxMovie
         movies={upcomingMovies}
-        title="Upcoming movies in theatres"
+        title="Upcoming"
         path="movies/upcoming"
       />
     </>

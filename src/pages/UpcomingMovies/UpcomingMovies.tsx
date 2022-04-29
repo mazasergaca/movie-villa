@@ -25,7 +25,7 @@ const UpcomingMovies = () => {
 
   return (
     <BoxPage
-      title="Upcoming movies in theatres"
+      title="Upcoming movies"
       movies={upcomingMovies}
       handleClick={handleClick}
       page={page}
