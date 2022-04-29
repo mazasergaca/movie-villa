@@ -1,13 +1,20 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  margin: 80px 0;
+  margin: 50px 0;
 
-  /* background-color: #333; */
+  @media screen and (min-width: 768px) {
+    margin: 80px 0;
+  }
 `;
 
 export const Form = styled.form`
   margin-bottom: 10px;
+
+  @media screen and (max-width: 768px) {
+    width: 250px;
+    margin: 0 auto 20px;
+  }
 `;
 
 export const Label = styled.label`
@@ -28,17 +35,32 @@ export const Label = styled.label`
 `;
 
 export const Input = styled.input`
-  margin-left: 5px;
+  font-size: 18px;
 
   border: none;
   outline: none;
   color: #fff;
   background-color: transparent;
+
+  &::placeholder {
+    color: #ccc;
+  }
 `;
 
 export const Button = styled.button`
+  font-size: 22px;
+
   border: none;
+  color: #fff;
   background-color: transparent;
+  cursor: pointer;
+  transform: scale(1);
+  transition: color 250ms, transform 250ms;
+
+  &:hover {
+    color: #ff3b5f;
+    transform: scale(1.1);
+  }
 `;
 
 export const InfoText = styled.p`
@@ -49,7 +71,6 @@ export const InfoText = styled.p`
 
 export const List = styled.ul`
   margin: -5px;
-  padding: 0;
   display: flex;
   flex-wrap: wrap;
 `;

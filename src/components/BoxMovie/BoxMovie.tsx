@@ -15,12 +15,25 @@ interface BoxMovieProps {
 
 // settings for react-slick
 const settings = {
-  dots: true,
   infinite: false,
   speed: 500,
   slidesToScroll: 1,
   slidesToShow: 5,
   swipeToSlide: true,
+  responsive: [
+    {
+      breakpoint: 1080,
+      settings: {
+        slidesToShow: 4,
+      },
+    },
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 2,
+      },
+    },
+  ],
 };
 //make slug for pathname
 const makeSlug = (string: string) => slugify(string, { lower: true });

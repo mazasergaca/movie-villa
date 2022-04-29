@@ -24,12 +24,7 @@ const Movie = () => {
       refetch();
       window.scrollTo(0, 0);
     }
-  }, [searchParam, refetch]);
-
-  useEffect(() => {
-    refetch();
-    window.scrollTo(0, 0);
-  }, [page, refetch]);
+  }, [searchParam, refetch, page]);
 
   const handleChange = e => {
     setValue(e.target.value);
@@ -63,7 +58,7 @@ const Movie = () => {
             />
           </Label>
           <Button type="submit">
-            <AiOutlineSearch color="#fff" size="24px" />
+            <AiOutlineSearch />
           </Button>
         </Form>
         <InfoText>
