@@ -6,7 +6,16 @@ import { Container } from '@mui/material';
 import { AiOutlineSearch } from 'react-icons/ai';
 
 import BoxPage from 'components/BoxPage';
-import { Wrapper, Form, Label, Input, Button, InfoText } from './Movies.styles';
+import {
+  Section,
+  Wrapper,
+  Form,
+  Label,
+  Input,
+  Button,
+  InfoText,
+  WrapperInfo,
+} from './Movies.styles';
 
 const Movie = () => {
   const navigation = useNavigate();
@@ -47,34 +56,42 @@ const Movie = () => {
   };
 
   return (
-    <Container>
-      <Wrapper>
-        <Form onSubmit={handleSubmit}>
-          <Label>
-            <Input
-              placeholder="Search movies"
-              value={value}
-              onChange={handleChange}
+    <Section>
+      <Container>
+        <Wrapper>
+          <Form onSubmit={handleSubmit}>
+            <Label>
+              <Input
+                placeholder="Search movies"
+                value={value}
+                onChange={handleChange}
+              />
+            </Label>
+            <Button type="submit">
+              <AiOutlineSearch />
+            </Button>
+          </Form>
+          <InfoText>
+            {moviesByName?.data.total_results}{' '}
+            {moviesByName?.data.total_results > 1 ? 'movies' : 'movie'} found
+            for your query
+          </InfoText>
+        </Wrapper>
+        {moviesByName?.data.total_results > 0 ? (
+          <>
+            <BoxPage
+              movies={moviesByName}
+              page={page}
+              handleClick={handleClick}
             />
-          </Label>
-          <Button type="submit">
-            <AiOutlineSearch />
-          </Button>
-        </Form>
-        <InfoText>
-          {moviesByName?.data.total_results}{' '}
-          {moviesByName?.data.total_results > 1 ? 'movies' : 'movie'} found for
-          your query
-        </InfoText>
-        {moviesByName && (
-          <BoxPage
-            movies={moviesByName}
-            page={page}
-            handleClick={handleClick}
-          />
+          </>
+        ) : (
+          <WrapperInfo>
+            <InfoText>Enter movie name</InfoText>
+          </WrapperInfo>
         )}
-      </Wrapper>
-    </Container>
+      </Container>
+    </Section>
   );
 };
 

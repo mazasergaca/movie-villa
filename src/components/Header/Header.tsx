@@ -35,7 +35,6 @@ const Header = () => {
   const handleClickButtonMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-  console.log(location);
 
   const handleChange = (e: SyntheticEvent) => {
     setValue(e.target.value);
@@ -61,50 +60,50 @@ const Header = () => {
       <Container style={{ minWidth: '320px' }}>
         <Wrapper>
           <ButtonMenu onClick={handleClickButtonMenu}>
-            <CloseButton open={isMenuOpen} />
-            <MenuOpen open={isMenuOpen} />
+            <CloseButton $open={isMenuOpen} />
+            <MenuOpen $open={isMenuOpen} />
           </ButtonMenu>
-          <MobileMenu open={isMenuOpen}>
+          <MobileMenu $open={isMenuOpen}>
             <WrapperMobileLinks>
               <MobileLink
                 to="/"
                 onClick={handleClickButtonMenu}
-                current={location.pathname === '/'}
+                $current={location.pathname === '/'}
               >
                 HOME
               </MobileLink>
               <MobileLink
                 to="/movies"
                 onClick={handleClickButtonMenu}
-                current={location.pathname === '/movies'}
+                $current={location.pathname === '/movies'}
               >
                 SEARCH
               </MobileLink>
               <MobileLink
                 to="/movies/trending"
                 onClick={handleClickButtonMenu}
-                current={location.pathname === '/movies/trending'}
+                $current={location.pathname === '/movies/trending'}
               >
                 TRENDING
               </MobileLink>
               <MobileLink
                 to="/movies/popular"
                 onClick={handleClickButtonMenu}
-                current={location.pathname === '/movies/popular'}
+                $current={location.pathname === '/movies/popular'}
               >
                 POPULAR
               </MobileLink>
               <MobileLink
                 to="/movies/top_rated"
                 onClick={handleClickButtonMenu}
-                current={location.pathname === '/movies/top_rated'}
+                $current={location.pathname === '/movies/top_rated'}
               >
                 TOP RATED
               </MobileLink>
               <MobileLink
                 to="/movies/upcoming"
                 onClick={handleClickButtonMenu}
-                current={location.pathname === '/movies/upcoming'}
+                $current={location.pathname === '/movies/upcoming'}
               >
                 UPCOMING
               </MobileLink>
@@ -116,16 +115,36 @@ const Header = () => {
             </LogoLink>
             <WrapperLinks>
               <Item>
-                <LinkStyled to="movies/trending">Trending</LinkStyled>
+                <LinkStyled
+                  to="movies/trending"
+                  $current={location.pathname === '/movies/trending'}
+                >
+                  Trending
+                </LinkStyled>
               </Item>
               <Item>
-                <LinkStyled to="movies/popular">Popular</LinkStyled>
+                <LinkStyled
+                  to="movies/popular"
+                  $current={location.pathname === '/movies/popular'}
+                >
+                  Popular
+                </LinkStyled>
               </Item>
               <Item>
-                <LinkStyled to="movies/top_rated">Top rated</LinkStyled>
+                <LinkStyled
+                  to="movies/top_rated"
+                  $current={location.pathname === '/movies/top_rated'}
+                >
+                  Top rated
+                </LinkStyled>
               </Item>
               <Item>
-                <LinkStyled to="movies/upcoming">Upcoming</LinkStyled>
+                <LinkStyled
+                  to="movies/upcoming"
+                  $current={location.pathname === '/movies/upcoming'}
+                >
+                  Upcoming
+                </LinkStyled>
               </Item>
             </WrapperLinks>
           </WrapperNav>

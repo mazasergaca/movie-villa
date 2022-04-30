@@ -8,7 +8,7 @@ export const Wrapper = styled.div`
   }
   @media screen and (min-width: 1280px) {
     padding: 50px 0 0 0;
-  Ъ
+  }
 `;
 
 export const BackdropInfo = styled.div`
@@ -19,8 +19,8 @@ export const BackdropInfo = styled.div`
   align-items: center;
   background-color: #222;
   background-image: ${props =>
-    props.img
-      ? `linear-gradient(83deg, rgba(0,0,0,0.6674019949776786) 0%, rgba(0,0,0,0.7486344879748774) 100%),url(https://image.tmdb.org/t/p/original/${props.img})`
+    props.$backdrop
+      ? `linear-gradient(83deg, rgba(0,0,0,0.6674019949776786) 0%, rgba(0,0,0,0.7486344879748774) 100%),url(https://image.tmdb.org/t/p/original/${props.$backdrop})`
       : 'none'};
 
   background-size: cover;
@@ -75,13 +75,15 @@ export const Info = styled.div`
 `;
 
 export const Title = styled.h1`
-  margin-bottom: 10px;
+  margin-bottom: 25px;
 
   text-align: center;
   font-size: 28px;
   font-family: 'DM Sans';
 
   @media screen and (min-width: 768px) {
+    margin-bottom: 10px;
+
     font-size: 24px;
   }
 `;
@@ -98,7 +100,7 @@ export const Genre = styled.span`
 `;
 
 export const InfoName = styled.span`
-  margin-top: 6px;
+  margin-top: 15px;
 
   font-size: 20px;
 
