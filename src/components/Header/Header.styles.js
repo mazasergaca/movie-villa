@@ -103,7 +103,7 @@ export const Item = styled.div`
 export const LinkStyled = styled(Link)`
   font-size: 16px;
 
-  color: #fff;
+  color: ${props => (props.$current ? '#ff3b5f' : '#fff')};
   transition: color 250ms;
 
   &:hover {
@@ -131,14 +131,14 @@ export const ButtonMenu = styled.button`
 
 export const CloseButton = styled(AiOutlineClose)`
   position: absolute;
-  opacity: ${props => (props.open ? 1 : 0)};
+  opacity: ${props => (props.$open ? 1 : 0)};
   color: #fff;
-  transform: ${props => (props.open ? 'rotate(0)' : 'rotate(50deg)')};
+  transform: ${props => (props.$open ? 'rotate(0)' : 'rotate(50deg)')};
   transition: transform 300ms, opacity 450ms;
 `;
 
 export const MenuOpen = styled(AiOutlineMenu)`
-  opacity: ${props => (props.open ? 0 : 1)};
+  opacity: ${props => (props.$open ? 0 : 1)};
 
   transition: opacity 450ms;
 `;
@@ -151,9 +151,9 @@ export const MobileMenu = styled.div`
   padding: 15px 15px;
   z-index: 4;
 
-  transform: ${props => (props.open ? 'translateX(0)' : 'translateX(-100%)')};
-  ${props => props.open && 'overflow: hidden'};
-  ${props => !props.open && 'pointer-events: none;'};
+  transform: ${props => (props.$open ? 'translateX(0)' : 'translateX(-100%)')};
+  ${props => props.$open && 'overflow: hidden'};
+  ${props => !props.$open && 'pointer-events: none;'};
   border-top: 1px solid #ff3b5f;
   border-right: 4px solid #ff3b5f;
   background-color: #040914;
@@ -175,7 +175,7 @@ export const MobileLink = styled(Link)`
   font-weight: 600;
   text-align: center;
 
-  color: ${props => (props.current ? '#ff3b5f' : '#fff')};
+  color: ${props => (props.$current ? '#ff3b5f' : '#fff')};
   transition: color 250ms;
 
   &:nth-child(2n -1) {

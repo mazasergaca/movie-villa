@@ -87,21 +87,29 @@ const MovieDetails = () => {
     useMovieVideoById(id);
   const { movieSimilar, refetchMoviesSimilar, isFetchingMoviesSimilar } =
     useMovieSimilar(id);
-  const { movieCast, isFetchingMovieCast } = useMovieCast(id);
+  const { movieCast, refetchMovieCast, isFetchingMovieCast } = useMovieCast(id);
   const { reviewsMovie, isFetchingReviewsMovies } = useReviewsMovies(id);
   const { movieImages, isFetchingMovieImages } = useMovieImages(id);
+  console.log(movieImages);
 
   useEffect(() => {
     refetchMovieById();
     refetchMoviesSimilar();
     refetchMovieVideo();
+    refetchMovieCast();
     window.scrollTo(0, 0);
-  }, [location, refetchMovieById, refetchMoviesSimilar, refetchMovieVideo]);
+  }, [
+    location,
+    refetchMovieById,
+    refetchMoviesSimilar,
+    refetchMovieVideo,
+    refetchMovieCast,
+  ]);
 
   return (
     <>
       {movieById && !isFetchingMovieById && (
-        <BackdropInfo img={movieById.data.backdrop_path}>
+        <BackdropInfo $backdrop={movieById.data.backdrop_path}>
           <Container>
             <WrapperInfo>
               <Poster>
@@ -124,26 +132,32 @@ const MovieDetails = () => {
                   ))}
                 </WrapperInfo>
 
-                <InfoName>
-                  Release date:{' '}
-                  <InfoValue>{movieById.data.release_date}</InfoValue>
-                </InfoName>
+                {movieById?.data.release_date && (
+                  <InfoName>
+                    Release date:{' '}
+                    <InfoValue>{movieById.data.release_date}</InfoValue>
+                  </InfoName>
+                )}
                 {movieById?.data.tagline && (
                   <InfoName>
                     Tagline: <InfoValue>{movieById.data.tagline}</InfoValue>
                   </InfoName>
                 )}
-                <InfoName>
-                  <InfoValue>{movieById.data.overview}</InfoValue>
-                </InfoName>
-                <InfoName>
-                  <Rating
-                    value={movieById.data.vote_average}
-                    precision={0.1}
-                    readOnly
-                    max={10}
-                  />
-                </InfoName>
+                {movieById?.data.overview && (
+                  <InfoName>
+                    <InfoValue>{movieById.data.overview}</InfoValue>
+                  </InfoName>
+                )}
+                {movieById?.data.vote_count > 0 && (
+                  <InfoName>
+                    <Rating
+                      value={movieById.data.vote_average}
+                      precision={0.1}
+                      readOnly
+                      max={10}
+                    />
+                  </InfoName>
+                )}
                 {!!movieById?.data.production_companies.length && (
                   <>
                     <InfoName>Prodaction companies:</InfoName>
@@ -164,7 +178,7 @@ const MovieDetails = () => {
 
       <Container>
         <Wrapper>
-          {movieCast && !isFetchingMovieCast && (
+          {!!movieCast?.data.cast.length && !isFetchingMovieCast && (
             <BoxCast cast={movieCast} title="Cast and crew" />
           )}
 
@@ -197,7 +211,7 @@ const MovieDetails = () => {
                       label="REVIEWS"
                       {...a11yProps(0)}
                     />
-                    {!!movieImages?.data.posters.length && (
+                    {!!movieImages?.data.backdrops.length && (
                       <Tab
                         style={{ color: '#fff' }}
                         icon={<IoMdPhotos />}
@@ -243,7 +257,7 @@ const MovieDetails = () => {
                   <TabPanel value={value} index={1}>
                     {movieImages && (
                       <ImageList sx={{ width: '100%', height: 500 }} cols={3}>
-                        {movieImages.data.posters.map(image => (
+                        {movieImages.data.backdrops.map(image => (
                           <ImageListItem key={image.file_path}>
                             <img
                               src={`https://image.tmdb.org/t/p/w500/${image.file_path}`}
@@ -258,7 +272,7 @@ const MovieDetails = () => {
                 </>
               )}
           </WrapperMedia>
-          {movieSimilar && !isFetchingMoviesSimilar && (
+          {!!movieSimilar?.data.results.length && !isFetchingMoviesSimilar && (
             <BoxMovie movies={movieSimilar} title="Similar movies" path="/" />
           )}
         </Wrapper>

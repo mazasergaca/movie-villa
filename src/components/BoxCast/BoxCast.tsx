@@ -20,26 +20,31 @@ import {
 const settings = {
   infinite: false,
   speed: 500,
-  slidesToScroll: 1,
+  slidesToScroll: 7,
   slidesToShow: 7,
   swipeToSlide: true,
+  draggable: false,
   responsive: [
     {
       breakpoint: 1080,
       settings: {
         slidesToShow: 4,
+        slidesToScroll: 4,
       },
     },
     {
       breakpoint: 768,
       settings: {
         slidesToShow: 3,
+        slidesToScroll: 3,
       },
     },
     {
       breakpoint: 480,
       settings: {
         slidesToShow: 2,
+        slidesToScroll: 2,
+        draggable: true,
       },
     },
   ],

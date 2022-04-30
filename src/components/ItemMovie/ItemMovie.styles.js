@@ -8,8 +8,8 @@ export const Item = styled.div`
 
 export const Poster = styled.div`
   position: relative;
-  width: 140px;
-  height: 210px;
+  width: 120px;
+  height: 180px;
 
   overflow: hidden;
 

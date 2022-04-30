@@ -15,22 +15,25 @@ interface BoxMovieProps {
 
 // settings for react-slick
 const settings = {
-  infinite: false,
+  draggable: false,
   speed: 500,
-  slidesToScroll: 1,
+  slidesToScroll: 5,
   slidesToShow: 5,
   swipeToSlide: true,
   responsive: [
     {
       breakpoint: 1080,
       settings: {
+        slidesToScroll: 4,
         slidesToShow: 4,
       },
     },
     {
       breakpoint: 600,
       settings: {
+        slidesToScroll: 2,
         slidesToShow: 2,
+        draggable: true,
       },
     },
   ],

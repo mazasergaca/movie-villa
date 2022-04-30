@@ -3,10 +3,6 @@ import styled from 'styled-components';
 export const Wrapper = styled.div`
   padding: 30px 0;
 
-  // css class mui item
-  & .css-r93niq-MuiButtonBase-root-MuiPaginationItem-root {
-    color: #fff;
-  }
   @media screen and (min-width: 768px) {
     padding: 40px 0;
   }
@@ -54,7 +50,7 @@ export const List = styled.ul`
 `;
 
 export const Item = styled.li`
-  @media screen and (max-width: 767px) {
+  @media screen and (max-width: 479px) {
     &:not(:nth-child(3n)) {
       margin-right: 5px;
     }
@@ -66,8 +62,26 @@ export const Item = styled.li`
     width: calc((100% - 10px) / 2);
   }
 
-  @media screen and (min-width: 768px) {
-    width: calc((100% - 15px) / 4);
+  @media screen and (min-width: 480px) and (max-width: 767px) {
+    width: calc((100% - 15px) / 3);
+    &:not(:nth-child(3n)) {
+      margin-right: 5px;
+    }
+
+    &:nth-last-child(n + 4) {
+      margin-bottom: 20px;
+    }
+  }
+
+  @media screen and (min-width: 768px) and (max-width: 1279px) {
+    width: calc((100% - 40px) / 4);
+    &:not(:nth-child(5n)) {
+      margin-right: 10px;
+    }
+
+    &:nth-last-child(n + 5) {
+      margin-bottom: 20px;
+    }
   }
   @media screen and (min-width: 1280px) {
     width: calc((100% - 40px) / 5);

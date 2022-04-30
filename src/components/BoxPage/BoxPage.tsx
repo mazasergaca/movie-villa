@@ -47,9 +47,10 @@ const BoxPage = ({ title, movies, handleClick, page }) => {
         <WrapperPagination>
           <Pagination
             count={movies?.data.total_pages}
+            size="small"
             variant="outlined"
             shape="rounded"
-            color="primary"
+            color="secondary"
             onChange={e => handleClick(Number(e.target.textContent))}
             page={page}
           />

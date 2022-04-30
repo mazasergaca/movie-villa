@@ -1,15 +1,19 @@
 import styled from 'styled-components';
 
-export const Wrapper = styled.div`
-  margin: 50px 0;
+export const Section = styled.section`
+  margin-top: 40px;
+`;
 
+export const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   @media screen and (min-width: 768px) {
-    margin: 80px 0;
+    flex-direction: row;
   }
 `;
 
 export const Form = styled.form`
-  margin-bottom: 10px;
+  margin: 0 100px 0 0;
 
   @media screen and (max-width: 768px) {
     width: 250px;
@@ -19,8 +23,6 @@ export const Form = styled.form`
 
 export const Label = styled.label`
   position: relative;
-
-  font-size: 22px;
 
   &::after {
     position: absolute;
@@ -61,6 +63,12 @@ export const Button = styled.button`
     color: #ff3b5f;
     transform: scale(1.1);
   }
+`;
+export const WrapperInfo = styled.div`
+  height: 30vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const InfoText = styled.p`

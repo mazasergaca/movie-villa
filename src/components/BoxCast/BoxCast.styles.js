@@ -28,8 +28,8 @@ export const Item = styled.div`
 
 export const Poster = styled.div`
   position: relative;
-  width: 138px;
-  height: 207px;
+  width: 120px;
+  height: 180px;
   margin-bottom: 10px;
 
   display: flex;
@@ -39,6 +39,11 @@ export const Poster = styled.div`
   overflow: hidden;
   border-radius: 10px;
   background-color: #111;
+
+  @media screen and (min-width: 480px) {
+    width: 138px;
+    height: 207px;
+  }
 `;
 
 export const Backdrop = styled.div`
