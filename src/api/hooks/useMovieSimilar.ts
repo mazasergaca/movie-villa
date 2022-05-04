@@ -1,16 +1,11 @@
 import { useQuery } from 'react-query';
-import { toast } from 'react-toastify';
 import { getMovieSimilar } from 'api/services/movies.services.ts';
 
-export const useMovieSimilar = id => {
+export const useMovieSimilar = (id: string) => {
   const {
     data: movieSimilar,
     refetch: refetchMoviesSimilar,
     isFetching: isFetchingMoviesSimilar,
-  } = useQuery('movie somilar', () => getMovieSimilar(id), {
-    onError: (error: any) => {
-      toast.error(error.message);
-    },
-  });
+  } = useQuery('movie somilar', () => getMovieSimilar(id));
   return { movieSimilar, refetchMoviesSimilar, isFetchingMoviesSimilar };
 };

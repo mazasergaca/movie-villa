@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import Slider from 'react-slick';
 import { Link } from 'react-router-dom';
 import slugify from 'slugify';
@@ -52,7 +52,12 @@ const settings = {
 //make slug for pathname
 const makeSlug = (string: string) => slugify(string, { lower: true });
 
-const BoxCast = ({ cast, title }) => {
+interface BoxCastProps {
+  cast: any;
+  title: any;
+}
+
+const BoxCast: FC<BoxCastProps> = ({ cast, title }) => {
   return (
     <Container>
       <Wrapper>

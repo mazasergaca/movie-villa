@@ -42,6 +42,8 @@ import {
   InfoReview,
   NoReviews,
   Iframe,
+  WrappperNotFound,
+  TitleNotFound,
 } from './MovieDetails.styles';
 
 interface TabPanelProps {
@@ -82,7 +84,9 @@ const MovieDetails = () => {
   const location = useLocation();
   const id = makeIdFromSlug(location.pathname);
 
-  const { movieById, refetchMovieById, isFetchingMovieById } = useMovieById(id);
+  const { movieById, refetchMovieById, isFetchingMovieById, isErrorMovieById } =
+    useMovieById(id);
+
   const { movieVideo, refetchMovieVideo, isFetchingMovieVideo } =
     useMovieVideoById(id);
   const { movieSimilar, refetchMoviesSimilar, isFetchingMoviesSimilar } =
@@ -90,7 +94,6 @@ const MovieDetails = () => {
   const { movieCast, refetchMovieCast, isFetchingMovieCast } = useMovieCast(id);
   const { reviewsMovie, isFetchingReviewsMovies } = useReviewsMovies(id);
   const { movieImages, isFetchingMovieImages } = useMovieImages(id);
-  console.log(movieImages);
 
   useEffect(() => {
     refetchMovieById();
@@ -108,175 +111,191 @@ const MovieDetails = () => {
 
   return (
     <>
-      {movieById && !isFetchingMovieById && (
-        <BackdropInfo $backdrop={movieById.data.backdrop_path}>
-          <Container>
-            <WrapperInfo>
-              <Poster>
-                <img
-                  src={
-                    movieById.data.poster_path
-                      ? `https://image.tmdb.org/t/p/w500/${movieById.data.poster_path}`
-                      : noPoster
-                  }
-                  alt={movieById?.data.original_title}
-                  width="100%"
-                />
-              </Poster>
-              <Info>
-                <Title>{movieById.data.original_title}</Title>
-
+      {!isErrorMovieById ? (
+        <>
+          {movieById && !isFetchingMovieById && (
+            <BackdropInfo $backdrop={movieById.data.backdrop_path}>
+              <Container>
                 <WrapperInfo>
-                  {movieById.data.genres.map((item, index) => (
-                    <Genre key={index}>{item.name.toLowerCase()}</Genre>
-                  ))}
+                  <Poster>
+                    <img
+                      src={
+                        movieById.data.poster_path
+                          ? `https://image.tmdb.org/t/p/w500/${movieById.data.poster_path}`
+                          : noPoster
+                      }
+                      alt={movieById?.data.original_title}
+                      width="100%"
+                    />
+                  </Poster>
+                  <Info>
+                    <Title>{movieById.data.original_title}</Title>
+
+                    <WrapperInfo>
+                      {movieById.data.genres.map((item, index) => (
+                        <Genre key={index}>{item.name.toLowerCase()}</Genre>
+                      ))}
+                    </WrapperInfo>
+
+                    {movieById?.data.release_date && (
+                      <InfoName>
+                        Release date:{' '}
+                        <InfoValue>{movieById.data.release_date}</InfoValue>
+                      </InfoName>
+                    )}
+                    {movieById?.data.tagline && (
+                      <InfoName>
+                        Tagline: <InfoValue>{movieById.data.tagline}</InfoValue>
+                      </InfoName>
+                    )}
+                    {movieById?.data.overview && (
+                      <InfoName>
+                        <InfoValue>{movieById.data.overview}</InfoValue>
+                      </InfoName>
+                    )}
+                    {movieById?.data.vote_count > 0 && (
+                      <InfoName>
+                        <Rating
+                          value={movieById.data.vote_average}
+                          precision={0.1}
+                          readOnly
+                          max={10}
+                        />
+                      </InfoName>
+                    )}
+                    {!!movieById?.data.production_companies.length && (
+                      <>
+                        <InfoName>Prodaction companies:</InfoName>
+                        <LogoList>
+                          {movieById.data.production_companies.map(
+                            (item, index) => (
+                              <Logo key={index}>{item.name}</Logo>
+                            )
+                          )}
+                        </LogoList>
+                      </>
+                    )}
+                  </Info>
                 </WrapperInfo>
-
-                {movieById?.data.release_date && (
-                  <InfoName>
-                    Release date:{' '}
-                    <InfoValue>{movieById.data.release_date}</InfoValue>
-                  </InfoName>
-                )}
-                {movieById?.data.tagline && (
-                  <InfoName>
-                    Tagline: <InfoValue>{movieById.data.tagline}</InfoValue>
-                  </InfoName>
-                )}
-                {movieById?.data.overview && (
-                  <InfoName>
-                    <InfoValue>{movieById.data.overview}</InfoValue>
-                  </InfoName>
-                )}
-                {movieById?.data.vote_count > 0 && (
-                  <InfoName>
-                    <Rating
-                      value={movieById.data.vote_average}
-                      precision={0.1}
-                      readOnly
-                      max={10}
-                    />
-                  </InfoName>
-                )}
-                {!!movieById?.data.production_companies.length && (
-                  <>
-                    <InfoName>Prodaction companies:</InfoName>
-                    <LogoList>
-                      {movieById.data.production_companies.map(
-                        (item, index) => (
-                          <Logo key={index}>{item.name}</Logo>
-                        )
-                      )}
-                    </LogoList>
-                  </>
-                )}
-              </Info>
-            </WrapperInfo>
-          </Container>
-        </BackdropInfo>
-      )}
-
-      <Container>
-        <Wrapper>
-          {!!movieCast?.data.cast.length && !isFetchingMovieCast && (
-            <BoxCast cast={movieCast} title="Cast and crew" />
+              </Container>
+            </BackdropInfo>
           )}
 
-          <WrapperMedia>
-            {movieVideo?.data?.results[0]?.key && !isFetchingMovieVideo && (
-              <WrapperVideo>
-                <Iframe
-                  src={`https://www.youtube-nocookie.com/embed/${movieVideo?.data.results[0].key}`}
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  title="Embedded youtube"
-                />
-              </WrapperVideo>
-            )}
-
-            {!isFetchingReviewsMovies &&
-              !isFetchingMovieImages &&
-              movieImages &&
-              reviewsMovie && (
-                <>
-                  <Tabs
-                    value={value}
-                    onChange={handleChange}
-                    aria-label="icon label tabs example"
-                  >
-                    <Tab
-                      style={{ color: '#fff' }}
-                      icon={<MdReviews />}
-                      label="REVIEWS"
-                      {...a11yProps(0)}
-                    />
-                    {!!movieImages?.data.backdrops.length && (
-                      <Tab
-                        style={{ color: '#fff' }}
-                        icon={<IoMdPhotos />}
-                        label="POSTERS"
-                        {...a11yProps(1)}
-                      />
-                    )}
-                  </Tabs>
-                  <TabPanel value={value} index={0}>
-                    {!!reviewsMovie?.data.results.length ? (
-                      <ListReviews>
-                        {reviewsMovie.data.results.map(review => (
-                          <ItemReview key={review.id}>
-                            <InfoReview>
-                              <AvatarRewiew>
-                                <img
-                                  src={
-                                    review.author_details.avatar_path?.includes(
-                                      'http'
-                                    )
-                                      ? review.author_details.avatar_path?.substring(
-                                          1
-                                        )
-                                      : review.author_details.avatar_path
-                                      ? `https://image.tmdb.org/t/p/w500/${review.author_details.avatar_path}`
-                                      : noPhoto
-                                  }
-                                  alt={review.author}
-                                  width="50px"
-                                />
-                              </AvatarRewiew>
-                              <NameReview>{review.author}</NameReview>
-                            </InfoReview>
-                            <Review>{review.content}</Review>
-                          </ItemReview>
-                        ))}
-                      </ListReviews>
-                    ) : (
-                      <NoReviews>No reviews</NoReviews>
-                    )}
-                  </TabPanel>
-
-                  <TabPanel value={value} index={1}>
-                    {movieImages && (
-                      <ImageList sx={{ width: '100%', height: 500 }} cols={3}>
-                        {movieImages.data.backdrops.map(image => (
-                          <ImageListItem key={image.file_path}>
-                            <img
-                              src={`https://image.tmdb.org/t/p/w500/${image.file_path}`}
-                              alt={movieById?.data.original_title}
-                              loading="lazy"
-                            />
-                          </ImageListItem>
-                        ))}
-                      </ImageList>
-                    )}
-                  </TabPanel>
-                </>
+          <Container>
+            <Wrapper>
+              {!!movieCast?.data.cast.length && !isFetchingMovieCast && (
+                <BoxCast cast={movieCast} title="Cast and crew" />
               )}
-          </WrapperMedia>
-          {!!movieSimilar?.data.results.length && !isFetchingMoviesSimilar && (
-            <BoxMovie movies={movieSimilar} title="Similar movies" path="/" />
-          )}
-        </Wrapper>
-      </Container>
+
+              <WrapperMedia>
+                {movieVideo?.data?.results[0]?.key && !isFetchingMovieVideo && (
+                  <WrapperVideo>
+                    <Iframe
+                      src={`https://www.youtube-nocookie.com/embed/${movieVideo?.data.results[0].key}`}
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      title="Embedded youtube"
+                    />
+                  </WrapperVideo>
+                )}
+
+                {!isFetchingReviewsMovies &&
+                  !isFetchingMovieImages &&
+                  movieImages &&
+                  reviewsMovie && (
+                    <>
+                      <Tabs
+                        value={value}
+                        onChange={handleChange}
+                        aria-label="icon label tabs example"
+                      >
+                        <Tab
+                          style={{ color: '#fff' }}
+                          icon={<MdReviews />}
+                          label="REVIEWS"
+                          {...a11yProps(0)}
+                        />
+                        {!!movieImages?.data.backdrops.length && (
+                          <Tab
+                            style={{ color: '#fff' }}
+                            icon={<IoMdPhotos />}
+                            label="POSTERS"
+                            {...a11yProps(1)}
+                          />
+                        )}
+                      </Tabs>
+                      <TabPanel value={value} index={0}>
+                        {!!reviewsMovie?.data.results.length ? (
+                          <ListReviews>
+                            {reviewsMovie.data.results.map(review => (
+                              <ItemReview key={review.id}>
+                                <InfoReview>
+                                  <AvatarRewiew>
+                                    <img
+                                      src={
+                                        review.author_details.avatar_path?.includes(
+                                          'http'
+                                        )
+                                          ? review.author_details.avatar_path?.substring(
+                                              1
+                                            )
+                                          : review.author_details.avatar_path
+                                          ? `https://image.tmdb.org/t/p/w500/${review.author_details.avatar_path}`
+                                          : noPhoto
+                                      }
+                                      alt={review.author}
+                                      width="50px"
+                                    />
+                                  </AvatarRewiew>
+                                  <NameReview>{review.author}</NameReview>
+                                </InfoReview>
+                                <Review>{review.content}</Review>
+                              </ItemReview>
+                            ))}
+                          </ListReviews>
+                        ) : (
+                          <NoReviews>No reviews</NoReviews>
+                        )}
+                      </TabPanel>
+
+                      <TabPanel value={value} index={1}>
+                        {movieImages && (
+                          <ImageList
+                            sx={{ width: '100%', height: 500 }}
+                            cols={3}
+                          >
+                            {movieImages.data.backdrops.map(image => (
+                              <ImageListItem key={image.file_path}>
+                                <img
+                                  src={`https://image.tmdb.org/t/p/w500/${image.file_path}`}
+                                  alt={movieById?.data.original_title}
+                                  loading="lazy"
+                                />
+                              </ImageListItem>
+                            ))}
+                          </ImageList>
+                        )}
+                      </TabPanel>
+                    </>
+                  )}
+              </WrapperMedia>
+              {!!movieSimilar?.data.results.length &&
+                !isFetchingMoviesSimilar && (
+                  <BoxMovie
+                    movies={movieSimilar}
+                    title="Similar movies"
+                    path="/"
+                  />
+                )}
+            </Wrapper>
+          </Container>
+        </>
+      ) : (
+        <WrappperNotFound>
+          <TitleNotFound>Not found movie</TitleNotFound>
+        </WrappperNotFound>
+      )}
     </>
   );
 };

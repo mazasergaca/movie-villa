@@ -1,5 +1,4 @@
 import { useQuery } from 'react-query';
-import { toast } from 'react-toastify';
 import { getMovieCast } from 'api/services/movies.services.ts';
 
 export const useMovieCast = (id: string) => {
@@ -7,11 +6,7 @@ export const useMovieCast = (id: string) => {
     data: movieCast,
     refetch: refetchMovieCast,
     isFetching: isFetchingMovieCast,
-  } = useQuery('movie cast', () => getMovieCast(id), {
-    onError: (error: any) => {
-      toast.error(error.message);
-    },
-  });
+  } = useQuery('movie cast', () => getMovieCast(id));
 
   return { movieCast, refetchMovieCast, isFetchingMovieCast };
 };
