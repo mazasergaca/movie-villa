@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query';
 import { toast } from 'react-toastify';
-import { getMovieById } from 'api/services/movies.services.ts';
+import { getMovieById } from '../services/movies-services';
 
 export const useMovieById = (id: string) => {
   const {

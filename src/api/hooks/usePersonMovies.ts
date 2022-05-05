@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import { getPersonMovies } from 'api/services/movies.services.ts';
+import { getPersonMovies } from '../services/movies-services';
 
 export const usePersonMovies = (id: string) => {
   const { data: personMovies, refetch: refetchPersonMovies } = useQuery(

@@ -247,5 +247,3 @@ export const WrappperNotFound = styled.div`
   align-items: center;
   justify-content: center;
 `;
-
-export const TitleNotFound = styled.h1``;

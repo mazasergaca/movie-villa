@@ -1,4 +1,4 @@
-import React, { useEffect, useState, ReactNode } from 'react';
+import React, { useEffect, useState, ReactNode, ChangeEvent } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Container } from '@mui/material';
 import Rating from '@mui/material/Rating';
@@ -9,17 +9,17 @@ import ImageListItem from '@mui/material/ImageListItem';
 import { MdReviews } from 'react-icons/md';
 import { IoMdPhotos } from 'react-icons/io';
 
-import noPhoto from 'assets/no_photo.png';
+import noPhoto from '../../assets/no_photo.png';
 import noPoster from '../../assets/not-found-poster.png';
-import { useMovieImages } from 'api/hooks/useMovieImages.ts';
-import { useReviewsMovies } from 'api/hooks/useReviewsMovie.ts';
-import { useMovieCast } from 'api/hooks/useMovieCast.ts';
-import { useMovieSimilar } from 'api/hooks/useMovieSimilar.ts';
-import { useMovieById } from 'api/hooks/useMovieById.ts';
-import { useMovieVideoById } from 'api/hooks/useMovieVideoById.ts';
+import { useMovieImages } from 'api/hooks/useMovieImages';
+import { useReviewsMovies } from 'api/hooks/useReviewsMovie';
+import { useMovieCast } from 'api/hooks/useMovieCast';
+import { useMovieSimilar } from 'api/hooks/useMovieSimilar';
+import { useMovieById } from 'api/hooks/useMovieById';
+import { useMovieVideoById } from 'api/hooks/useMovieVideoById';
 import BoxMovie from 'components/BoxMovie';
 import BoxCast from 'components/BoxCast';
-import makeIdFromSlug from 'services/slug.ts';
+import makeIdFromSlug from 'services/slug';
 import {
   Wrapper,
   Title,
@@ -43,7 +43,6 @@ import {
   NoReviews,
   Iframe,
   WrappperNotFound,
-  TitleNotFound,
 } from './MovieDetails.styles';
 
 interface TabPanelProps {
@@ -74,10 +73,22 @@ const a11yProps = (index: number) => {
   };
 };
 
+interface Item {
+  id: number;
+  name: string;
+}
+
+interface Review {
+  id: number;
+  author: string;
+  content: string;
+  author_details: any;
+}
+
 const MovieDetails = () => {
   const [value, setValue] = useState(0);
 
-  const handleChange = (_, newValue: number) => {
+  const handleChange = (e: ChangeEvent, newValue: number) => {
     setValue(newValue);
   };
 
@@ -132,8 +143,8 @@ const MovieDetails = () => {
                     <Title>{movieById.data.original_title}</Title>
 
                     <WrapperInfo>
-                      {movieById.data.genres.map((item, index) => (
-                        <Genre key={index}>{item.name.toLowerCase()}</Genre>
+                      {movieById.data.genres.map(({ id, name }: Item) => (
+                        <Genre key={id}>{name.toLowerCase()}</Genre>
                       ))}
                     </WrapperInfo>
 
@@ -168,8 +179,8 @@ const MovieDetails = () => {
                         <InfoName>Prodaction companies:</InfoName>
                         <LogoList>
                           {movieById.data.production_companies.map(
-                            (item, index) => (
-                              <Logo key={index}>{item.name}</Logo>
+                            ({ id, name }: Item) => (
+                              <Logo key={id}>{name}</Logo>
                             )
                           )}
                         </LogoList>
@@ -228,31 +239,38 @@ const MovieDetails = () => {
                       <TabPanel value={value} index={0}>
                         {!!reviewsMovie?.data.results.length ? (
                           <ListReviews>
-                            {reviewsMovie.data.results.map(review => (
-                              <ItemReview key={review.id}>
-                                <InfoReview>
-                                  <AvatarRewiew>
-                                    <img
-                                      src={
-                                        review.author_details.avatar_path?.includes(
-                                          'http'
-                                        )
-                                          ? review.author_details.avatar_path?.substring(
-                                              1
-                                            )
-                                          : review.author_details.avatar_path
-                                          ? `https://image.tmdb.org/t/p/w500/${review.author_details.avatar_path}`
-                                          : noPhoto
-                                      }
-                                      alt={review.author}
-                                      width="50px"
-                                    />
-                                  </AvatarRewiew>
-                                  <NameReview>{review.author}</NameReview>
-                                </InfoReview>
-                                <Review>{review.content}</Review>
-                              </ItemReview>
-                            ))}
+                            {reviewsMovie.data.results.map(
+                              ({
+                                id,
+                                author,
+                                content,
+                                author_details,
+                              }: Review) => (
+                                <ItemReview key={id}>
+                                  <InfoReview>
+                                    <AvatarRewiew>
+                                      <img
+                                        src={
+                                          author_details.avatar_path?.includes(
+                                            'http'
+                                          )
+                                            ? author_details.avatar_path?.substring(
+                                                1
+                                              )
+                                            : author_details.avatar_path
+                                            ? `https://image.tmdb.org/t/p/w500/${author_details.avatar_path}`
+                                            : noPhoto
+                                        }
+                                        alt={author}
+                                        width="50px"
+                                      />
+                                    </AvatarRewiew>
+                                    <NameReview>{author}</NameReview>
+                                  </InfoReview>
+                                  <Review>{content}</Review>
+                                </ItemReview>
+                              )
+                            )}
                           </ListReviews>
                         ) : (
                           <NoReviews>No reviews</NoReviews>
@@ -265,15 +283,17 @@ const MovieDetails = () => {
                             sx={{ width: '100%', height: 500 }}
                             cols={3}
                           >
-                            {movieImages.data.backdrops.map(image => (
-                              <ImageListItem key={image.file_path}>
-                                <img
-                                  src={`https://image.tmdb.org/t/p/w500/${image.file_path}`}
-                                  alt={movieById?.data.original_title}
-                                  loading="lazy"
-                                />
-                              </ImageListItem>
-                            ))}
+                            {movieImages.data.backdrops.map(
+                              ({ file_path }: string) => (
+                                <ImageListItem key={file_path}>
+                                  <img
+                                    src={`https://image.tmdb.org/t/p/w500/${file_path}`}
+                                    alt={movieById?.data.original_title}
+                                    loading="lazy"
+                                  />
+                                </ImageListItem>
+                              )
+                            )}
                           </ImageList>
                         )}
                       </TabPanel>
@@ -293,7 +313,7 @@ const MovieDetails = () => {
         </>
       ) : (
         <WrappperNotFound>
-          <TitleNotFound>Not found movie</TitleNotFound>
+          <h1>Not found movie</h1>
         </WrappperNotFound>
       )}
     </>

@@ -2,8 +2,8 @@ import React, { FC } from 'react';
 import { AiFillEye } from 'react-icons/ai';
 
 import { Item, Poster, Date, Name, Backdrop } from './ItemMovie.styles';
-
 import noPoster from '../../assets/not-found-poster.png';
+
 interface ItemMovieProps {
   src: string;
   date: string;

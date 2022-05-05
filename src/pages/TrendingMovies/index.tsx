@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-import { useRatedMovies } from 'api/hooks/useRatedMovies.ts';
+import { useTrendingMovies } from 'api/hooks/useTrendingMovies';
 import BoxPage from 'components/BoxPage';
 
-const TopRatedMovies = () => {
+const Trending = () => {
   const navigation = useNavigate();
   const location = useLocation();
   const searchParam = new URLSearchParams(location.search).get('page');
 
   const [page, setPage] = useState(Number(searchParam) || 1);
 
-  const { ratedMovies, refetch } = useRatedMovies(page);
+  const { trendingMovies, refetch } = useTrendingMovies(page);
 
   const handleClick = (page: number) => {
     setPage(page);
@@ -25,12 +25,12 @@ const TopRatedMovies = () => {
 
   return (
     <BoxPage
-      title="Top rated"
-      movies={ratedMovies}
+      title="Trending"
+      movies={trendingMovies}
       handleClick={handleClick}
       page={page}
     />
   );
 };
 
-export default TopRatedMovies;
+export default Trending;

@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import { getReviewsMovie } from 'api/services/movies.services.ts';
+import { getReviewsMovie } from '../services/movies-services';
 
 export const useReviewsMovies = (id: string) => {
   const {

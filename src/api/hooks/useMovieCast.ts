@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import { getMovieCast } from 'api/services/movies.services.ts';
+import { getMovieCast } from '../services/movies-services';
 
 export const useMovieCast = (id: string) => {
   const {

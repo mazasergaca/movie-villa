@@ -2,17 +2,18 @@ import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Slider from 'react-slick';
 import { Link } from 'react-router-dom';
-import slugify from 'slugify';
 import { Container } from '@mui/material';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 
-import makeIdFromSlug from 'services/slug.ts';
-import { usePersonDetails } from 'api/hooks/usePersonDetails.ts';
-import { usePersonMovies } from 'api/hooks/usePersonMovies.ts';
-import { usePersonImages } from 'api/hooks/usePersonImages.ts';
+import { makeSlug } from 'services/make-slug';
+import { sliderSettingsForPersonDetails } from 'services/slider-settings';
+import makeIdFromSlug from 'services/slug';
+import { usePersonDetails } from 'api/hooks/usePersonDetails';
+import { usePersonMovies } from 'api/hooks/usePersonMovies';
+import { usePersonImages } from 'api/hooks/usePersonImages';
 
-import noPoster from '../../assets/not-found-poster.png';
+import noPoster from 'assets/not-found-poster.png';
 import {
   Wrapper,
   WrapperInfo,
@@ -31,33 +32,12 @@ import {
   WrapperGallery,
 } from './PersonDetails.styles';
 
-// settings for react-slick
-const settings = {
-  infinite: false,
-  speed: 500,
-  slidesToScroll: 5,
-  slidesToShow: 5,
-  draggable: false,
-  responsive: [
-    {
-      breakpoint: 1080,
-      settings: {
-        slidesToShow: 4,
-        slidesToScroll: 4,
-      },
-    },
-    {
-      breakpoint: 600,
-      settings: {
-        slidesToShow: 2,
-        slidesToScroll: 2,
-        draggable: true,
-      },
-    },
-  ],
-};
-//make slug for pathname
-const makeSlug = (string: string) => slugify(string, { lower: true });
+interface Cast {
+  id: number;
+  title: string;
+  original_title: string;
+  poster_path: string;
+}
 
 const PersonDetails = () => {
   const [showMore, setShowMore] = useState(false);
@@ -113,8 +93,8 @@ const PersonDetails = () => {
                 <>
                   <InfoName>Also Known As</InfoName>
 
-                  {personDetails.data.also_known_as.map((name, index) => (
-                    <InfoValue key={index}>{name}</InfoValue>
+                  {personDetails.data.also_known_as.map((name: string) => (
+                    <InfoValue key={name}>{name}</InfoValue>
                   ))}
                 </>
               )}
@@ -138,36 +118,36 @@ const PersonDetails = () => {
               )}
               <WrapperSlider>
                 <TitleInfo>Known For</TitleInfo>
-                <Slider {...settings}>
+                <Slider {...sliderSettingsForPersonDetails}>
                   {personMovies &&
-                    personMovies.data.cast.map(movie => (
-                      <div key={movie.id}>
-                        <Link
-                          to={{
-                            pathname: `/movies/all/${makeSlug(
-                              movie.title || movie.original_title
-                            )}-${movie.id}`,
-                          }}
-                        >
-                          <Item>
-                            <Poster>
-                              <img
-                                src={
-                                  movie.poster_path
-                                    ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                                    : noPoster
-                                }
-                                alt={movie.title || movie.original_title}
-                                width="100%"
-                              />
-                            </Poster>
-                            <TitleMovie>
-                              {movie.title || movie.original_title}
-                            </TitleMovie>
-                          </Item>
-                        </Link>
-                      </div>
-                    ))}
+                    personMovies.data.cast.map(
+                      ({ id, title, original_title, poster_path }: Cast) => (
+                        <div key={id}>
+                          <Link
+                            to={{
+                              pathname: `/movies/all/${makeSlug(
+                                title || original_title
+                              )}-${id}`,
+                            }}
+                          >
+                            <Item>
+                              <Poster>
+                                <img
+                                  src={
+                                    poster_path
+                                      ? `https://image.tmdb.org/t/p/w500${poster_path}`
+                                      : noPoster
+                                  }
+                                  alt={title || original_title}
+                                  width="100%"
+                                />
+                              </Poster>
+                              <TitleMovie>{title || original_title}</TitleMovie>
+                            </Item>
+                          </Link>
+                        </div>
+                      )
+                    )}
                 </Slider>
               </WrapperSlider>
               {personImages?.data?.profiles.length > 2 && (
@@ -178,15 +158,17 @@ const PersonDetails = () => {
                     cols={3}
                     gap={8}
                   >
-                    {personImages.data.profiles.map(item => (
-                      <ImageListItem key={item.file_path}>
-                        <img
-                          src={`https://image.tmdb.org/t/p/w500${item.file_path}`}
-                          alt={personDetails.data.name}
-                          loading="lazy"
-                        />
-                      </ImageListItem>
-                    ))}
+                    {personImages?.data.profiles.map(
+                      ({ file_path }: string) => (
+                        <ImageListItem key={file_path}>
+                          <img
+                            src={`https://image.tmdb.org/t/p/w500${file_path}`}
+                            alt={personDetails.data.name}
+                            loading="lazy"
+                          />
+                        </ImageListItem>
+                      )
+                    )}
                   </ImageList>
                 </WrapperGallery>
               )}

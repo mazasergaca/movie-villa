@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query';
 import { toast } from 'react-toastify';
-import { getPersonDetails } from 'api/services/movies.services.ts';
+import { getPersonDetails } from '../services/movies-services';
 
 export const usePersonDetails = (id: string) => {
   const {
