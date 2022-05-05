@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-import { useUpcomingMovies } from 'api/hooks/useUpcomingMovies.ts';
+import { useUpcomingMovies } from 'api/hooks/useUpcomingMovies';
 import BoxPage from 'components/BoxPage';
 
 const UpcomingMovies = () => {

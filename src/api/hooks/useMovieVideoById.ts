@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import { getMovieVideoById } from 'api/services/movies.services.ts';
+import { getMovieVideoById } from '../services/movies-services';
 
 export const useMovieVideoById = (id: string) => {
   const {

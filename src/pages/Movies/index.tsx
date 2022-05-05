@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useMoviesByName } from 'api/hooks/useMoviesByName.ts';
+import { useMoviesByName } from 'api/hooks/useMoviesByName';
 import { Container } from '@mui/material';
 import { AiOutlineSearch } from 'react-icons/ai';
 
@@ -20,8 +20,10 @@ import {
 const Movie = () => {
   const navigation = useNavigate();
   const location = useLocation();
+
   const searchParam = new URLSearchParams(location.search).get('query');
   const searchParamPage = new URLSearchParams(location.search).get('page');
+
   const [value, setValue] = useState(searchParam || '');
   const [page, setPage] = useState(Number(searchParamPage) || 1);
 
@@ -35,7 +37,7 @@ const Movie = () => {
     }
   }, [searchParam, refetch, page]);
 
-  const handleChange = e => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
   };
 
@@ -44,7 +46,7 @@ const Movie = () => {
     navigation({ ...location, search: `query=${value}&page=${page}` });
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!value) {
       toast.info('Please input text');

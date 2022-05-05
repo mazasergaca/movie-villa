@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import { getMoviesByName } from 'api/services/movies.services.ts';
+import { getMoviesByName } from '../services/movies-services';
 
 export const useMoviesByName = (name: string, page: number) => {
   const { data: moviesByName, refetch } = useQuery('movies by name', () =>

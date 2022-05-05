@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import { getMovieSimilar } from 'api/services/movies.services.ts';
+import { getMovieSimilar } from '../services/movies-services';
 
 export const useMovieSimilar = (id: string) => {
   const {
