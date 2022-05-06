@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
+import React, { useState, ChangeEvent, FormEvent, FC } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Container } from '@mui/material';
@@ -26,21 +26,21 @@ import {
   MobileLink,
 } from './Header.styles';
 
-const Header = () => {
+const Header: FC = () => {
   const navigation = useNavigate();
   const location = useLocation();
   const [value, setValue] = useState<string>('');
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
-  const handleClickButtonMenu = () => {
+  const handleClickButtonMenu = (): void => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setValue(e.target.value);
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     if (!value) {
       toast.info('Please input text');

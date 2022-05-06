@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Container } from '@mui/material';
 import {
   AiFillFacebook,
@@ -9,7 +9,7 @@ import {
 
 import { Wrapper, List, Item, Text, Link } from './Footer.styles';
 
-const Footer = () => {
+const Footer: FC = () => {
   return (
     <footer>
       <Container>

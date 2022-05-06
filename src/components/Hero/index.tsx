@@ -5,7 +5,7 @@ import { sliderSettingsForHero } from 'services/slider-settings';
 import { useTrendingMovies } from 'api/hooks/useTrendingMovies';
 import { Section, Container, Poster } from './Hero.styles';
 
-interface Item {
+interface ItemI {
   id: number;
   backdrop_path: string;
 }
@@ -20,7 +20,7 @@ const Hero: FC = () => {
           {trendingMovies &&
             trendingMovies.data.results
               .slice(0, 3)
-              .map(({ id, backdrop_path }: Item) => (
+              .map(({ id, backdrop_path }: ItemI) => (
                 <div key={id}>
                   <Poster color={backdrop_path}></Poster>
                 </div>

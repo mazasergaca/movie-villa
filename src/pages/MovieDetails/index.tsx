@@ -1,4 +1,4 @@
-import React, { useEffect, useState, ReactNode } from 'react';
+import React, { useEffect, useState, ReactNode, FC } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Container } from '@mui/material';
 import Rating from '@mui/material/Rating';
@@ -72,25 +72,25 @@ const a11yProps = (index: number) => {
   };
 };
 
-interface Item {
+interface ItemI {
   id: number;
   name: string;
 }
 
-interface Review {
+interface ReviewI {
   id: number;
   author: string;
   content: string;
   author_details: any;
 }
-interface MovieImages {
+interface MovieImagesI {
   file_path: string;
 }
 
-const MovieDetails = () => {
+const MovieDetails: FC = () => {
   const [value, setValue] = useState(0);
 
-  const handleChange = (e: any, newValue: number) => {
+  const handleChange = (e: any, newValue: number): void => {
     setValue(newValue);
   };
 
@@ -145,7 +145,7 @@ const MovieDetails = () => {
                     <Title>{movieById.data.original_title}</Title>
 
                     <WrapperInfo>
-                      {movieById.data.genres.map(({ id, name }: Item) => (
+                      {movieById.data.genres.map(({ id, name }: ItemI) => (
                         <Genre key={id}>{name.toLowerCase()}</Genre>
                       ))}
                     </WrapperInfo>
@@ -181,7 +181,7 @@ const MovieDetails = () => {
                         <InfoName>Prodaction companies:</InfoName>
                         <LogoList>
                           {movieById.data.production_companies.map(
-                            ({ id, name }: Item) => (
+                            ({ id, name }: ItemI) => (
                               <Logo key={id}>{name}</Logo>
                             )
                           )}
@@ -247,7 +247,7 @@ const MovieDetails = () => {
                                 author,
                                 content,
                                 author_details,
-                              }: Review) => (
+                              }: ReviewI) => (
                                 <li key={id}>
                                   <InfoReview>
                                     <AvatarRewiew>
@@ -286,7 +286,7 @@ const MovieDetails = () => {
                             cols={3}
                           >
                             {movieImages.data.backdrops.map(
-                              ({ file_path }: MovieImages) => (
+                              ({ file_path }: MovieImagesI) => (
                                 <ImageListItem key={file_path}>
                                   <img
                                     src={`https://image.tmdb.org/t/p/w500/${file_path}`}

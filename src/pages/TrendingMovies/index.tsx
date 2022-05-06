@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FC } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import { useTrendingMovies } from 'api/hooks/useTrendingMovies';
 import BoxPage from 'components/BoxPage';
 
-const Trending = () => {
+const Trending: FC = () => {
   const navigation = useNavigate();
   const location = useLocation();
   const searchParam = new URLSearchParams(location.search).get('page');

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
+import React, { useState, useEffect, ChangeEvent, FormEvent, FC } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useMoviesByName } from 'api/hooks/useMoviesByName';
@@ -17,7 +17,7 @@ import {
   WrapperInfo,
 } from './Movies.styles';
 
-const Movie = () => {
+const Movie: FC = () => {
   const navigation = useNavigate();
   const location = useLocation();
 
@@ -37,16 +37,16 @@ const Movie = () => {
     }
   }, [searchParam, refetch, page]);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setValue(e.target.value);
   };
 
-  const handleClick = (page: number) => {
+  const handleClick = (page: number): void => {
     setPage(page);
     navigation({ ...location, search: `query=${value}&page=${page}` });
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     if (!value) {
       toast.info('Please input text');

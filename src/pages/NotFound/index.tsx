@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { FC } from 'react';
 
 import { Wrapper, Title, Text } from './NotFound.styles';
 
-const NotFound = () => {
+const NotFound: FC = () => {
   return (
     <Wrapper>
       <Text>404</Text>
