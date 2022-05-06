@@ -2,6 +2,11 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
 
+interface StyledProps {
+  $open?: boolean;
+  $current?: boolean;
+}
+
 export const HeaderStyled = styled.header`
   padding: 5px 0;
 
@@ -100,7 +105,7 @@ export const Item = styled.div`
   }
 `;
 
-export const LinkStyled = styled(Link)`
+export const LinkStyled = styled(Link)<StyledProps>`
   font-size: 16px;
 
   color: ${props => (props.$current ? '#ff3b5f' : '#fff')};
@@ -129,7 +134,7 @@ export const ButtonMenu = styled.button`
   }
 `;
 
-export const CloseButton = styled(AiOutlineClose)`
+export const CloseButton = styled(AiOutlineClose)<StyledProps>`
   position: absolute;
   opacity: ${props => (props.$open ? 1 : 0)};
   color: #fff;
@@ -137,13 +142,13 @@ export const CloseButton = styled(AiOutlineClose)`
   transition: transform 300ms, opacity 450ms;
 `;
 
-export const MenuOpen = styled(AiOutlineMenu)`
+export const MenuOpen = styled(AiOutlineMenu)<StyledProps>`
   opacity: ${props => (props.$open ? 0 : 1)};
 
   transition: opacity 450ms;
 `;
 
-export const MobileMenu = styled.div`
+export const MobileMenu = styled.div<StyledProps>`
   position: absolute;
   top: 55px;
   left: 0;
@@ -168,7 +173,7 @@ export const WrapperMobileLinks = styled.div`
   justify-content: center;
 `;
 
-export const MobileLink = styled(Link)`
+export const MobileLink = styled(Link)<StyledProps>`
   width: calc((100% - 45px) / 2);
 
   font-size: 20px;

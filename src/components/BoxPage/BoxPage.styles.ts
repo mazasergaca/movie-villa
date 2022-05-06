@@ -98,4 +98,10 @@ export const Item = styled.li`
 export const WrapperPagination = styled.div`
   display: flex;
   justify-content: center;
+
+  & button {
+    color: #fff;
+  }
 `;
+
+export const ButtonPagination = styled.button``;

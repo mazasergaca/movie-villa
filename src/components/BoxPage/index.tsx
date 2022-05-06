@@ -1,6 +1,7 @@
-import React, { FC, ChangeEvent } from 'react';
-import Pagination from '@mui/material/Pagination';
+import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
+import Pagination from '@mui/material/Pagination';
+import PaginationItem from '@mui/material/PaginationItem';
 import { Container } from '@mui/material';
 
 import { makeSlug } from '../../services/make-slug';
@@ -12,6 +13,7 @@ import {
   List,
   Item,
   WrapperPagination,
+  ButtonPagination,
 } from './BoxPage.styles';
 
 interface BoxPageProps {
@@ -21,7 +23,7 @@ interface BoxPageProps {
   page: number;
 }
 
-interface Item {
+interface ItemI {
   id: number;
   original_title: string;
   original_name: string;
@@ -47,7 +49,7 @@ const BoxPage: FC<BoxPageProps> = ({ title, movies, handleClick, page }) => {
               poster_path,
               release_date,
               first_air_date,
-            }: Item) => (
+            }: ItemI) => (
               <Item key={id}>
                 <Link
                   to={{
@@ -73,9 +75,13 @@ const BoxPage: FC<BoxPageProps> = ({ title, movies, handleClick, page }) => {
             variant="outlined"
             shape="rounded"
             color="secondary"
-            onChange={(e: ChangeEvent<HTMLButtonElement>) =>
-              handleClick(Number(e.target.textContent))
-            }
+            renderItem={(item: any) => (
+              <PaginationItem
+                component={ButtonPagination}
+                {...item}
+                onClick={() => handleClick(item.page)}
+              />
+            )}
             page={page}
           />
         </WrapperPagination>

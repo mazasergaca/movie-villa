@@ -38,6 +38,9 @@ interface Cast {
   original_title: string;
   poster_path: string;
 }
+interface PersonImages {
+  file_path: string;
+}
 
 const PersonDetails = () => {
   const [showMore, setShowMore] = useState(false);
@@ -159,7 +162,7 @@ const PersonDetails = () => {
                     gap={8}
                   >
                     {personImages?.data.profiles.map(
-                      ({ file_path }: string) => (
+                      ({ file_path }: PersonImages) => (
                         <ImageListItem key={file_path}>
                           <img
                             src={`https://image.tmdb.org/t/p/w500${file_path}`}
