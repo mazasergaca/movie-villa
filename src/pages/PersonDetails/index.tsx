@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, FC } from 'react';
 import { useLocation } from 'react-router-dom';
 import Slider from 'react-slick';
 import { Link } from 'react-router-dom';
@@ -32,14 +32,17 @@ import {
   WrapperGallery,
 } from './PersonDetails.styles';
 
-interface Cast {
+interface CastI {
   id: number;
   title: string;
   original_title: string;
   poster_path: string;
 }
+interface PersonImagesI {
+  file_path: string;
+}
 
-const PersonDetails = () => {
+const PersonDetails: FC = () => {
   const [showMore, setShowMore] = useState(false);
 
   const location = useLocation();
@@ -49,7 +52,7 @@ const PersonDetails = () => {
   const { personMovies } = usePersonMovies(id);
   const { personImages } = usePersonImages(id);
 
-  const handleClickBtnMore = () => setShowMore(!showMore);
+  const handleClickBtnMore = (): void => setShowMore(!showMore);
 
   return (
     <Container>
@@ -121,7 +124,7 @@ const PersonDetails = () => {
                 <Slider {...sliderSettingsForPersonDetails}>
                   {personMovies &&
                     personMovies.data.cast.map(
-                      ({ id, title, original_title, poster_path }: Cast) => (
+                      ({ id, title, original_title, poster_path }: CastI) => (
                         <div key={id}>
                           <Link
                             to={{
@@ -159,7 +162,7 @@ const PersonDetails = () => {
                     gap={8}
                   >
                     {personImages?.data.profiles.map(
-                      ({ file_path }: string) => (
+                      ({ file_path }: PersonImagesI) => (
                         <ImageListItem key={file_path}>
                           <img
                             src={`https://image.tmdb.org/t/p/w500${file_path}`}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 
 import { usePopularMovies } from 'api/hooks/usePopularMovies';
 import { useTrendingMovies } from 'api/hooks/useTrendingMovies';
@@ -8,7 +8,7 @@ import { useUpcomingMovies } from 'api/hooks/useUpcomingMovies';
 import Hero from 'components/Hero';
 import BoxMovie from 'components/BoxMovie';
 
-const Home = () => {
+const Home: FC = () => {
   const { popularMovies } = usePopularMovies(1);
   const { trendingMovies } = useTrendingMovies(1);
   const { ratedMovies } = useRatedMovies(1);

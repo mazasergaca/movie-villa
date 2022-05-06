@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, FC } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import { usePopularMovies } from 'api/hooks/usePopularMovies';
 import BoxPage from 'components/BoxPage';
 
-const PopularMovies = () => {
+const PopularMovies: FC = () => {
   const navigation = useNavigate();
   const location = useLocation();
   const searchParam = new URLSearchParams(location.search).get('page');
@@ -13,7 +13,7 @@ const PopularMovies = () => {
 
   const { popularMovies, refetch } = usePopularMovies(page);
 
-  const handleClick = (page: number) => {
+  const handleClick = (page: number): void => {
     setPage(page);
     navigation({ ...location, search: `page=${page}` });
   };

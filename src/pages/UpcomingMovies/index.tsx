@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, FC } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import { useUpcomingMovies } from 'api/hooks/useUpcomingMovies';
 import BoxPage from 'components/BoxPage';
 
-const UpcomingMovies = () => {
+const UpcomingMovies: FC = () => {
   const navigation = useNavigate();
   const location = useLocation();
   const searchParam = new URLSearchParams(location.search).get('page');
@@ -13,7 +13,7 @@ const UpcomingMovies = () => {
 
   const { upcomingMovies, refetch } = useUpcomingMovies(page);
 
-  const handleClick = (page: number) => {
+  const handleClick = (page: number): void => {
     setPage(page);
     navigation({ ...location, search: `page=${page}` });
   };

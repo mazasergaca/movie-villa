@@ -11,10 +11,10 @@ import { Wrapper, Title, Item, Name, Poster, Backdrop } from './BoxCast.styles';
 
 interface BoxCastProps {
   cast: any;
-  readonly title: string;
+  title: string;
 }
 
-interface Item {
+interface ItemI {
   id: number;
   name: string;
   original_name: string;
@@ -29,8 +29,8 @@ const BoxCast: FC<BoxCastProps> = ({ cast, title }) => {
 
         <Slider {...sliderSettingsForBoxCast}>
           {cast &&
-            cast?.data?.cast.map(
-              ({ id, name, original_name, profile_path }: Item) => (
+            cast?.data.cast.map(
+              ({ id, name, original_name, profile_path }: ItemI) => (
                 <div key={id}>
                   <Link
                     to={{

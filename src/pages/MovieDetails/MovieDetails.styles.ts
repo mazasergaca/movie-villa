@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+interface StyleProps {
+  $backdrop: string;
+}
+
 export const Wrapper = styled.div`
   padding: 20px 0 0 0;
 
@@ -11,7 +15,7 @@ export const Wrapper = styled.div`
   }
 `;
 
-export const BackdropInfo = styled.div`
+export const BackdropInfo = styled.div<StyleProps>`
   margin: 20px auto;
   padding: 10px 0;
 
@@ -191,8 +195,6 @@ export const ListReviews = styled.ul`
 
   color: #fff;
 `;
-
-export const ItemReview = styled.li``;
 
 export const InfoReview = styled.div`
   padding: 5px 0;
