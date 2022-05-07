@@ -7,6 +7,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { Global } from 'styles/global';
+import LoadingPage from 'components/LoadingPage';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
 
@@ -18,14 +19,14 @@ const TopRatedMovies = lazy(() => import('./pages/TopRatedMovies'));
 const UpcomingMovies = lazy(() => import('./pages/UpcomingMovies'));
 const MovieDetails = lazy(() => import('./pages/MovieDetails'));
 const PersonDetails = lazy(() => import('./pages/PersonDetails'));
-const NotFound = lazy(() => import('./pages/NotFound'));
+const NotFound = lazy(() => import('./pages/NotFound/index'));
 
 export const App = () => {
   return (
     <>
       <Global />
       <Header />
-      <Suspense fallback={null}>
+      <Suspense fallback={<LoadingPage />}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="movies" element={<Movie />} />

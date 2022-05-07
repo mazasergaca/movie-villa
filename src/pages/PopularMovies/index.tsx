@@ -11,7 +11,8 @@ const PopularMovies: FC = () => {
 
   const [page, setPage] = useState(Number(searchParam) || 1);
 
-  const { popularMovies, refetch } = usePopularMovies(page);
+  const { popularMovies, refetchPopularMovies, isLoadingPopularMovies } =
+    usePopularMovies(page);
 
   const handleClick = (page: number): void => {
     setPage(page);
@@ -19,12 +20,13 @@ const PopularMovies: FC = () => {
   };
 
   useEffect(() => {
-    refetch();
+    refetchPopularMovies();
     window.scrollTo(0, 0);
-  }, [page, refetch]);
+  }, [page, refetchPopularMovies]);
 
   return (
     <BoxPage
+      isLoading={isLoadingPopularMovies}
       title="Popular movies"
       movies={popularMovies}
       handleClick={handleClick}

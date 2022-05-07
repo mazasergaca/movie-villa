@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import Slider from 'react-slick';
+import Skeleton from '@mui/material/Skeleton';
 
 import { sliderSettingsForHero } from 'services/slider-settings';
 import { useTrendingMovies } from 'api/hooks/useTrendingMovies';
@@ -11,21 +12,26 @@ interface ItemI {
 }
 
 const Hero: FC = () => {
-  const { trendingMovies } = useTrendingMovies(1);
+  const { trendingMovies, isLoadingTrendingMovies } = useTrendingMovies(1);
 
   return (
     <Section>
       <Container>
-        <Slider {...sliderSettingsForHero}>
-          {trendingMovies &&
-            trendingMovies.data.results
-              .slice(0, 3)
-              .map(({ id, backdrop_path }: ItemI) => (
-                <div key={id}>
-                  <Poster color={backdrop_path}></Poster>
-                </div>
-              ))}
-        </Slider>
+        {!isLoadingTrendingMovies && (
+          <Slider {...sliderSettingsForHero}>
+            {trendingMovies &&
+              trendingMovies.data.results
+                .slice(0, 3)
+                .map(({ id, backdrop_path }: ItemI) => (
+                  <div key={id}>
+                    <Poster color={backdrop_path}></Poster>
+                  </div>
+                ))}
+          </Slider>
+        )}
+        {isLoadingTrendingMovies && (
+          <Skeleton variant="rectangular" width="100%" height={600} />
+        )}
       </Container>
     </Section>
   );

@@ -11,7 +11,8 @@ const Trending: FC = () => {
 
   const [page, setPage] = useState(Number(searchParam) || 1);
 
-  const { trendingMovies, refetch } = useTrendingMovies(page);
+  const { trendingMovies, refetchTrendingMovies, isLoadingTrendingMovies } =
+    useTrendingMovies(page);
 
   const handleClick = (page: number) => {
     setPage(page);
@@ -19,12 +20,13 @@ const Trending: FC = () => {
   };
 
   useEffect(() => {
-    refetch();
+    refetchTrendingMovies();
     window.scrollTo(0, 0);
-  }, [page, refetch]);
+  }, [page, refetchTrendingMovies]);
 
   return (
     <BoxPage
+      isLoading={isLoadingTrendingMovies}
       title="Trending"
       movies={trendingMovies}
       handleClick={handleClick}

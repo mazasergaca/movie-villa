@@ -7,6 +7,7 @@ export const useMovieById = (id: string) => {
     data: movieById,
     refetch: refetchMovieById,
     isFetching: isFetchingMovieById,
+    isLoading: isLoadingMovieById,
     isError: isErrorMovieById,
   } = useQuery('movie by id', () => getMovieById(id), {
     onError: (error: any) => {
@@ -18,6 +19,7 @@ export const useMovieById = (id: string) => {
     movieById,
     refetchMovieById,
     isFetchingMovieById,
+    isLoadingMovieById,
     isErrorMovieById,
   };
 };

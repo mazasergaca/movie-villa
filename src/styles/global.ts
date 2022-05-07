@@ -18,6 +18,10 @@ export const Global = createGlobalStyle`
 
     background-color: #040914;
     color: #fff;
+
+    & .MuiSkeleton-root {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
   }
 
   code {

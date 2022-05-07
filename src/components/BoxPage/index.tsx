@@ -3,11 +3,13 @@ import { Link } from 'react-router-dom';
 import Pagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
 import { Container } from '@mui/material';
+import Skeleton from '@mui/material/Skeleton';
 
 import { makeSlug } from '../../services/make-slug';
 import ItemMovie from '../ItemMovie';
 import {
   Wrapper,
+  WrapperTitle,
   Title,
   Page,
   List,
@@ -17,6 +19,7 @@ import {
 } from './BoxPage.styles';
 
 interface BoxPageProps {
+  isLoading?: boolean;
   title?: string;
   movies: any;
   handleClick: (numberPage: number) => void;
@@ -32,14 +35,34 @@ interface ItemI {
   first_air_date: string;
 }
 
-const BoxPage: FC<BoxPageProps> = ({ title, movies, handleClick, page }) => {
+const BoxPage: FC<BoxPageProps> = ({
+  isLoading,
+  title,
+  movies,
+  handleClick,
+  page,
+}) => {
   return (
     <Container>
       <Wrapper>
-        {title && <Title>{title}</Title>}
-        <Page>
-          Page {page} of {movies?.data.total_pages}
-        </Page>
+        {title && !isLoading ? (
+          <WrapperTitle>
+            <Title>{title}</Title>
+          </WrapperTitle>
+        ) : (
+          <WrapperTitle>
+            <Skeleton variant="rectangular" width={180} height={50} />
+          </WrapperTitle>
+        )}
+        {!isLoading ? (
+          <Page>
+            Page {page} of {movies?.data.total_pages}
+          </Page>
+        ) : (
+          <Page>
+            <Skeleton variant="text" width={95} height={18} />
+          </Page>
+        )}
         <List>
           {movies?.data.results.map(
             ({
@@ -59,6 +82,7 @@ const BoxPage: FC<BoxPageProps> = ({ title, movies, handleClick, page }) => {
                   }}
                 >
                   <ItemMovie
+                    isLoading={isLoading}
                     src={poster_path}
                     date={release_date || first_air_date}
                     name={original_title || original_name}
@@ -68,23 +92,25 @@ const BoxPage: FC<BoxPageProps> = ({ title, movies, handleClick, page }) => {
             )
           )}
         </List>
-        <WrapperPagination>
-          <Pagination
-            count={movies?.data.total_pages}
-            size="small"
-            variant="outlined"
-            shape="rounded"
-            color="secondary"
-            renderItem={(item: any) => (
-              <PaginationItem
-                component={ButtonPagination}
-                {...item}
-                onClick={() => handleClick(item.page)}
-              />
-            )}
-            page={page}
-          />
-        </WrapperPagination>
+        {!isLoading && (
+          <WrapperPagination>
+            <Pagination
+              count={movies?.data.total_pages}
+              size="small"
+              variant="outlined"
+              shape="rounded"
+              color="secondary"
+              renderItem={(item: any) => (
+                <PaginationItem
+                  component={ButtonPagination}
+                  {...item}
+                  onClick={() => handleClick(item.page)}
+                />
+              )}
+              page={page}
+            />
+          </WrapperPagination>
+        )}
       </Wrapper>
     </Container>
   );
