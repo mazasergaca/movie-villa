@@ -11,7 +11,8 @@ const TopRatedMovies: FC = () => {
 
   const [page, setPage] = useState(Number(searchParam) || 1);
 
-  const { ratedMovies, refetch } = useRatedMovies(page);
+  const { ratedMovies, refetchRatedMovies, isLoadingRatedMovies } =
+    useRatedMovies(page);
 
   const handleClick = (page: number): void => {
     setPage(page);
@@ -19,12 +20,13 @@ const TopRatedMovies: FC = () => {
   };
 
   useEffect(() => {
-    refetch();
+    refetchRatedMovies();
     window.scrollTo(0, 0);
-  }, [page, refetch]);
+  }, [page, refetchRatedMovies]);
 
   return (
     <BoxPage
+      isLoading={isLoadingRatedMovies}
       title="Top rated"
       movies={ratedMovies}
       handleClick={handleClick}

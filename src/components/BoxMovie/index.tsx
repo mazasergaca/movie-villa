@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import Slider from 'react-slick';
 import { Link } from 'react-router-dom';
 import { Container } from '@mui/material';
+import Skeleton from '@mui/material/Skeleton';
 
 import { makeSlug } from 'services/make-slug';
 import { sliderSettingsForBoxMovie } from 'services/slider-settings';
@@ -9,6 +10,7 @@ import ItemMovie from 'components/ItemMovie';
 import { Section, Wrapper, Title, LinkStyled } from './BoxMovie.styles';
 
 interface BoxMovieProps {
+  isLoading: boolean;
   movies: any;
   title: string;
   path: string;
@@ -23,13 +25,21 @@ interface Item {
   first_air_date: string;
 }
 
-const BoxMovie: FC<BoxMovieProps> = ({ movies, title, path }) => {
+const BoxMovie: FC<BoxMovieProps> = ({ isLoading, movies, title, path }) => {
   return (
     <Section>
       <Container>
         <Wrapper>
-          <Title>{title}</Title>
-          {path && <LinkStyled to={path}>View all</LinkStyled>}
+          {!isLoading ? (
+            <Title>{title}</Title>
+          ) : (
+            <Skeleton variant="rectangular" width={192} height={55} />
+          )}
+          {path && !isLoading ? (
+            <LinkStyled to={path}>View all</LinkStyled>
+          ) : (
+            <Skeleton variant="rectangular" width={68} height={23} />
+          )}
         </Wrapper>
         <Slider {...sliderSettingsForBoxMovie}>
           {movies &&
@@ -51,6 +61,7 @@ const BoxMovie: FC<BoxMovieProps> = ({ movies, title, path }) => {
                     }}
                   >
                     <ItemMovie
+                      isLoading={isLoading}
                       src={poster_path}
                       date={release_date || first_air_date}
                       name={original_title || original_name}

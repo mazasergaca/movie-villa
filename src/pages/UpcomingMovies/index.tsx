@@ -11,7 +11,8 @@ const UpcomingMovies: FC = () => {
 
   const [page, setPage] = useState(Number(searchParam) || 1);
 
-  const { upcomingMovies, refetch } = useUpcomingMovies(page);
+  const { upcomingMovies, refetchUpcomingMovies, isLoadingUpcomingMovie } =
+    useUpcomingMovies(page);
 
   const handleClick = (page: number): void => {
     setPage(page);
@@ -19,12 +20,13 @@ const UpcomingMovies: FC = () => {
   };
 
   useEffect(() => {
-    refetch();
+    refetchUpcomingMovies();
     window.scrollTo(0, 0);
-  }, [page, refetch]);
+  }, [page, refetchUpcomingMovies]);
 
   return (
     <BoxPage
+      isLoading={isLoadingUpcomingMovie}
       title="Upcoming movies"
       movies={upcomingMovies}
       handleClick={handleClick}

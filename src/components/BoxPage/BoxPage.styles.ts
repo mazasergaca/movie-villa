@@ -11,9 +11,18 @@ export const Wrapper = styled.div`
   }
 `;
 
-export const Title = styled.h1`
+export const WrapperTitle = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-bottom: 20px;
 
+  @media screen and (min-width: 768px) {
+    margin-bottom: 30px;
+  }
+`;
+
+export const Title = styled.h1`
   font-size: 30px;
   text-align: center;
   @media screen and (min-width: 768px) {
@@ -21,13 +30,14 @@ export const Title = styled.h1`
   }
   @media screen and (min-width: 768px) {
     font-size: 36px;
-    margin-bottom: 30px;
   }
 `;
 
-export const Page = styled.p`
+export const Page = styled.span`
   margin-bottom: 10px;
   margin-left: 5px;
+
+  display: inline-block;
 
   font-size: 14px;
   @media screen and (min-width: 768px) {

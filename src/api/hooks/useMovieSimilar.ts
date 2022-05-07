@@ -6,6 +6,12 @@ export const useMovieSimilar = (id: string) => {
     data: movieSimilar,
     refetch: refetchMoviesSimilar,
     isFetching: isFetchingMoviesSimilar,
+    isLoading: isLoadingSimilarMovies,
   } = useQuery('movie somilar', () => getMovieSimilar(id));
-  return { movieSimilar, refetchMoviesSimilar, isFetchingMoviesSimilar };
+  return {
+    movieSimilar,
+    refetchMoviesSimilar,
+    isFetchingMoviesSimilar,
+    isLoadingSimilarMovies,
+  };
 };

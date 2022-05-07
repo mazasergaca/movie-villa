@@ -3,8 +3,6 @@ import styled from 'styled-components';
 export const Section = styled.section`
   height: 250px;
 
-  background-color: #002;
-
   //react-slick classes
   & .slick-dots {
     bottom: 15px;

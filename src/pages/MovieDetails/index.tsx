@@ -6,6 +6,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
+import Skeleton from '@mui/material/Skeleton';
 import { MdReviews } from 'react-icons/md';
 import { IoMdPhotos } from 'react-icons/io';
 
@@ -90,20 +91,29 @@ interface MovieImagesI {
 const MovieDetails: FC = () => {
   const [value, setValue] = useState(0);
 
-  const handleChange = (e: any, newValue: number): void => {
+  const handleChange = (_: any, newValue: number): void => {
     setValue(newValue);
   };
 
   const location = useLocation();
   const id = makeIdFromSlug(location.pathname);
 
-  const { movieById, refetchMovieById, isFetchingMovieById, isErrorMovieById } =
-    useMovieById(id);
+  const {
+    movieById,
+    refetchMovieById,
+    isFetchingMovieById,
+    isErrorMovieById,
+    isLoadingMovieById,
+  } = useMovieById(id);
 
   const { movieVideo, refetchMovieVideo, isFetchingMovieVideo } =
     useMovieVideoById(id);
-  const { movieSimilar, refetchMoviesSimilar, isFetchingMoviesSimilar } =
-    useMovieSimilar(id);
+  const {
+    movieSimilar,
+    refetchMoviesSimilar,
+    isFetchingMoviesSimilar,
+    isLoadingSimilarMovies,
+  } = useMovieSimilar(id);
   const { movieCast, refetchMovieCast, isFetchingMovieCast } = useMovieCast(id);
   const { reviewsMovie, isFetchingReviewsMovies } = useReviewsMovies(id);
   const { movieImages, isFetchingMovieImages } = useMovieImages(id);
@@ -131,42 +141,64 @@ const MovieDetails: FC = () => {
               <Container>
                 <WrapperInfo>
                   <Poster>
-                    <img
-                      src={
-                        movieById.data.poster_path
-                          ? `https://image.tmdb.org/t/p/w500/${movieById.data.poster_path}`
-                          : noPoster
-                      }
-                      alt={movieById?.data.original_title}
-                      width="100%"
-                    />
+                    {!isLoadingMovieById ? (
+                      <img
+                        src={
+                          movieById.data.poster_path
+                            ? `https://image.tmdb.org/t/p/w500/${movieById.data.poster_path}`
+                            : noPoster
+                        }
+                        alt={movieById?.data.original_title}
+                        width="100%"
+                      />
+                    ) : (
+                      <Skeleton
+                        variant="rectangular"
+                        width="100%"
+                        height="100%"
+                      />
+                    )}
                   </Poster>
                   <Info>
-                    <Title>{movieById.data.original_title}</Title>
+                    {!isLoadingMovieById ? (
+                      <Title>{movieById.data.original_title}</Title>
+                    ) : (
+                      <Skeleton variant="text" width={550} height={32} />
+                    )}
 
-                    <WrapperInfo>
-                      {movieById.data.genres.map(({ id, name }: ItemI) => (
-                        <Genre key={id}>{name.toLowerCase()}</Genre>
-                      ))}
-                    </WrapperInfo>
+                    {!isLoadingMovieById ? (
+                      <WrapperInfo>
+                        {movieById.data.genres.map(({ id, name }: ItemI) => (
+                          <Genre key={id}>{name.toLowerCase()}</Genre>
+                        ))}
+                      </WrapperInfo>
+                    ) : (
+                      <Skeleton variant="text" width={150} height={26} />
+                    )}
 
-                    {movieById?.data.release_date && (
+                    {!isLoadingMovieById && movieById?.data.release_date ? (
                       <InfoName>
                         Release date:{' '}
                         <InfoValue>{movieById.data.release_date}</InfoValue>
                       </InfoName>
+                    ) : (
+                      <Skeleton variant="text" width={200} height={32} />
                     )}
-                    {movieById?.data.tagline && (
+                    {!isLoadingMovieById && movieById?.data.tagline ? (
                       <InfoName>
                         Tagline: <InfoValue>{movieById.data.tagline}</InfoValue>
                       </InfoName>
+                    ) : (
+                      <Skeleton variant="text" width={300} height={32} />
                     )}
-                    {movieById?.data.overview && (
+                    {!isLoadingMovieById && movieById?.data.overview ? (
                       <InfoName>
                         <InfoValue>{movieById.data.overview}</InfoValue>
                       </InfoName>
+                    ) : (
+                      <Skeleton variant="text" width="100%" height={255} />
                     )}
-                    {movieById?.data.vote_count > 0 && (
+                    {!isLoadingMovieById && movieById?.data.vote_count > 0 ? (
                       <InfoName>
                         <Rating
                           value={movieById.data.vote_average}
@@ -175,8 +207,11 @@ const MovieDetails: FC = () => {
                           max={10}
                         />
                       </InfoName>
+                    ) : (
+                      <Skeleton variant="text" width={300} height={40} />
                     )}
-                    {!!movieById?.data.production_companies.length && (
+                    {!isLoadingMovieById &&
+                    !!movieById?.data.production_companies.length ? (
                       <>
                         <InfoName>Prodaction companies:</InfoName>
                         <LogoList>
@@ -187,6 +222,8 @@ const MovieDetails: FC = () => {
                           )}
                         </LogoList>
                       </>
+                    ) : (
+                      <Skeleton variant="text" width={100} height={60} />
                     )}
                   </Info>
                 </WrapperInfo>
@@ -305,6 +342,7 @@ const MovieDetails: FC = () => {
               {!!movieSimilar?.data.results.length &&
                 !isFetchingMoviesSimilar && (
                   <BoxMovie
+                    isLoading={isLoadingSimilarMovies}
                     movies={movieSimilar}
                     title="Similar movies"
                     path="/"

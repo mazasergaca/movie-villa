@@ -50,7 +50,7 @@ export const WrapperInfo = styled.div`
 export const Poster = styled.div`
   width: 300px;
   height: 420px;
-  margin: 0 auto 10px;
+  margin-bottom: 10px;
   flex-shrink: 0;
 
   overflow: hidden;
