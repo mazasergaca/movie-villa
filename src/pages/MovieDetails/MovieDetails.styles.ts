@@ -50,7 +50,7 @@ export const WrapperInfo = styled.div`
 export const Poster = styled.div`
   width: 300px;
   height: 420px;
-  margin-bottom: 10px;
+  margin: 0 auto 10px;
   flex-shrink: 0;
 
   overflow: hidden;
@@ -61,7 +61,7 @@ export const Poster = styled.div`
   }
 
   @media screen and (min-width: 768px) {
-    margin-bottom: 0;
+    margin: 0;
     height: 450px;
   }
   @media screen and (min-width: 1280px) {
@@ -91,6 +91,13 @@ export const Title = styled.h1`
     font-size: 24px;
   }
 `;
+export const WrapperGenre = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  @media screen and (max-width: 480px) {
+    margin: -5px;
+  }
+`;
 
 export const Genre = styled.span`
   padding: 5px 10px;
@@ -98,8 +105,13 @@ export const Genre = styled.span`
   border-radius: 10px;
   background-color: #555;
 
-  &:not(:last-child) {
-    margin-right: 10px;
+  @media screen and (max-width: 480px) {
+    margin: 5px;
+  }
+  @media screen and (min-width: 480px) {
+    &:not(:last-child) {
+      margin-right: 10px;
+    }
   }
 `;
 

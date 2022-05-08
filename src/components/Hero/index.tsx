@@ -30,7 +30,7 @@ const Hero: FC = () => {
           </Slider>
         )}
         {isLoadingTrendingMovies && (
-          <Skeleton variant="rectangular" width="100%" height={600} />
+          <Skeleton variant="rectangular" width="100%" height="100%" />
         )}
       </Container>
     </Section>
