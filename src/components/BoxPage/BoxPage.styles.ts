@@ -60,6 +60,10 @@ export const List = styled.ul`
 `;
 
 export const Item = styled.li`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   @media screen and (max-width: 479px) {
     &:not(:nth-child(3n)) {
       margin-right: 5px;

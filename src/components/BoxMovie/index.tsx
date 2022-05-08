@@ -13,7 +13,7 @@ interface BoxMovieProps {
   isLoading: boolean;
   movies: any;
   title: string;
-  path: string;
+  path?: string;
 }
 
 interface Item {
@@ -35,9 +35,8 @@ const BoxMovie: FC<BoxMovieProps> = ({ isLoading, movies, title, path }) => {
           ) : (
             <Skeleton variant="rectangular" width={192} height={55} />
           )}
-          {path && !isLoading ? (
-            <LinkStyled to={path}>View all</LinkStyled>
-          ) : (
+          {path && !isLoading && <LinkStyled to={path}>View all</LinkStyled>}
+          {isLoading && (
             <Skeleton variant="rectangular" width={68} height={23} />
           )}
         </Wrapper>
@@ -61,7 +60,6 @@ const BoxMovie: FC<BoxMovieProps> = ({ isLoading, movies, title, path }) => {
                     }}
                   >
                     <ItemMovie
-                      isLoading={isLoading}
                       src={poster_path}
                       date={release_date || first_air_date}
                       name={original_title || original_name}

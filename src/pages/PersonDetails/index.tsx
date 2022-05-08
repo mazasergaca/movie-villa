@@ -1,10 +1,11 @@
-import React, { useState, FC } from 'react';
+import React, { useState, FC, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Slider from 'react-slick';
 import { Link } from 'react-router-dom';
 import { Container } from '@mui/material';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
+import Skeleton from '@mui/material/Skeleton';
 
 import { makeSlug } from 'services/make-slug';
 import { sliderSettingsForPersonDetails } from 'services/slider-settings';
@@ -45,6 +46,8 @@ interface PersonImagesI {
 const PersonDetails: FC = () => {
   const [showMore, setShowMore] = useState(false);
 
+  useEffect(() => window.scrollTo(0, 0), []);
+
   const location = useLocation();
   const id = makeIdFromSlug(location.pathname);
 
@@ -57,42 +60,48 @@ const PersonDetails: FC = () => {
   return (
     <Container>
       <Wrapper>
-        {personDetails && !isFetchingPersonDetails && (
-          <>
-            <WrapperInfo>
-              <Avatar>
-                <img
-                  src={
-                    personDetails?.data.profile_path
-                      ? `https://image.tmdb.org/t/p/w500/${personDetails.data.profile_path}`
-                      : noPoster
-                  }
-                  alt={personDetails?.data.name}
-                  width="100%"
-                />
-              </Avatar>
-              <NameMobile>{personDetails.data.name}</NameMobile>
+        <WrapperInfo>
+          <Avatar>
+            {!isFetchingPersonDetails && personDetails ? (
+              <img
+                src={
+                  personDetails.data.profile_path
+                    ? `https://image.tmdb.org/t/p/w500/${personDetails.data.profile_path}`
+                    : noPoster
+                }
+                alt={personDetails?.data.name}
+                width="100%"
+              />
+            ) : (
+              <Skeleton variant="rectangular" width="100%" height="100%" />
+            )}
+          </Avatar>
+          {!isFetchingPersonDetails && (
+            <>
+              <NameMobile>
+                {personDetails && <>{personDetails?.data.name}</>}
+              </NameMobile>
               <TitleInfo>Personal Info</TitleInfo>
               <InfoName>Known For</InfoName>
-              <InfoValue>{personDetails.data.known_for_department}</InfoValue>
+              <InfoValue>{personDetails?.data.known_for_department}</InfoValue>
               <InfoName>Gender</InfoName>
               <InfoValue>
-                {personDetails.data.gender === '1' ? 'Female' : 'Male'}
+                {personDetails?.data.gender === '1' ? 'Female' : 'Male'}
               </InfoValue>
-              {personDetails.data.birthday && (
+              {personDetails?.data.birthday && (
                 <>
                   <InfoName>Born</InfoName>
                   <InfoValue>{personDetails.data.birthday}</InfoValue>
                   <InfoValue>{personDetails.data.place_of_birth}</InfoValue>
                 </>
               )}
-              {personDetails.data.deathday && (
+              {personDetails?.data.deathday && (
                 <>
                   <InfoName>Died</InfoName>
                   <InfoValue>{personDetails.data.deathday}</InfoValue>
                 </>
               )}
-              {!!personDetails.data.also_known_as.length && (
+              {!!personDetails?.data.also_known_as.length && (
                 <>
                   <InfoName>Also Known As</InfoName>
 
@@ -101,10 +110,29 @@ const PersonDetails: FC = () => {
                   ))}
                 </>
               )}
-            </WrapperInfo>
-            <WrapperBiography>
-              <Name>{personDetails.data.name}</Name>
-              {personDetails.data.biography && (
+            </>
+          )}
+          {isFetchingPersonDetails && (
+            <>
+              <Skeleton variant="text" width="100%" height={40} />
+              <Skeleton variant="text" width={100} height={30} />
+              <Skeleton variant="text" width={150} height={20} />
+              <Skeleton variant="text" width={100} height={30} />
+              <Skeleton variant="text" width={150} height={20} />
+              <Skeleton variant="text" width={100} height={30} />
+              <Skeleton variant="text" width={150} height={20} />
+              <Skeleton variant="text" width={100} height={30} />
+              <Skeleton variant="text" width={150} height={20} />
+              <Skeleton variant="text" width={100} height={30} />
+              <Skeleton variant="text" width={150} height={20} />
+            </>
+          )}
+        </WrapperInfo>
+        <WrapperBiography>
+          {!isFetchingPersonDetails && personDetails && (
+            <>
+              <Name>{personDetails?.data.name}</Name>
+              {personDetails?.data.biography && (
                 <>
                   <TitleInfo>Biography</TitleInfo>
                   <InfoValue>
@@ -119,7 +147,18 @@ const PersonDetails: FC = () => {
                   </InfoValue>
                 </>
               )}
-              <WrapperSlider>
+            </>
+          )}
+          {isFetchingPersonDetails && (
+            <>
+              <Skeleton variant="text" width={250} height={60} />
+              <Skeleton variant="text" width={100} height={30} />
+              <Skeleton variant="text" width="100%" height={150} />
+            </>
+          )}
+          <WrapperSlider>
+            {!isFetchingPersonDetails && personMovies && (
+              <>
                 <TitleInfo>Known For</TitleInfo>
                 <Slider {...sliderSettingsForPersonDetails}>
                   {personMovies &&
@@ -152,32 +191,43 @@ const PersonDetails: FC = () => {
                       )
                     )}
                 </Slider>
-              </WrapperSlider>
-              {personImages?.data?.profiles.length > 2 && (
-                <WrapperGallery>
-                  <ImageList
-                    sx={{ width: 500, height: 450 }}
-                    variant="woven"
-                    cols={3}
-                    gap={8}
-                  >
-                    {personImages?.data.profiles.map(
-                      ({ file_path }: PersonImagesI) => (
-                        <ImageListItem key={file_path}>
-                          <img
-                            src={`https://image.tmdb.org/t/p/w500${file_path}`}
-                            alt={personDetails.data.name}
-                            loading="lazy"
-                          />
-                        </ImageListItem>
-                      )
-                    )}
-                  </ImageList>
-                </WrapperGallery>
-              )}
-            </WrapperBiography>
-          </>
-        )}
+              </>
+            )}
+            {isFetchingPersonDetails && (
+              <>
+                <Skeleton variant="text" width={180} height={40} />
+                <Skeleton variant="rectangular" width="100%" height={200} />
+              </>
+            )}
+          </WrapperSlider>
+          {!isFetchingPersonDetails && personImages?.data?.profiles.length > 2 && (
+            <WrapperGallery>
+              <ImageList
+                sx={{ width: 500, height: 450 }}
+                variant="woven"
+                cols={3}
+                gap={8}
+              >
+                {personImages?.data.profiles.map(
+                  ({ file_path }: PersonImagesI) => (
+                    <ImageListItem key={file_path}>
+                      <img
+                        src={`https://image.tmdb.org/t/p/w500${file_path}`}
+                        alt={personDetails?.data.name}
+                        loading="lazy"
+                      />
+                    </ImageListItem>
+                  )
+                )}
+              </ImageList>
+            </WrapperGallery>
+          )}
+          {isFetchingPersonDetails && (
+            <>
+              <Skeleton variant="rectangular" width="100%" height={200} />
+            </>
+          )}
+        </WrapperBiography>
       </Wrapper>
     </Container>
   );

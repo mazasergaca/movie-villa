@@ -13,7 +13,7 @@ export const WrapperInfo = styled.div`
   display: flex;
   flex-direction: column;
 
-  @media screen and (min-width: 768px) {
+  @media screen and (max-width: 768px) {
     margin-top: 40px;
   }
 `;

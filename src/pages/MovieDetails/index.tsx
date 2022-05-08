@@ -43,6 +43,7 @@ import {
   NoReviews,
   Iframe,
   WrappperNotFound,
+  WrapperGenre,
 } from './MovieDetails.styles';
 
 interface TabPanelProps {
@@ -136,100 +137,113 @@ const MovieDetails: FC = () => {
     <>
       {!isErrorMovieById ? (
         <>
-          {movieById && !isFetchingMovieById && (
-            <BackdropInfo $backdrop={movieById.data.backdrop_path}>
-              <Container>
-                <WrapperInfo>
-                  <Poster>
-                    {!isLoadingMovieById ? (
-                      <img
-                        src={
-                          movieById.data.poster_path
-                            ? `https://image.tmdb.org/t/p/w500/${movieById.data.poster_path}`
-                            : noPoster
-                        }
-                        alt={movieById?.data.original_title}
-                        width="100%"
-                      />
-                    ) : (
-                      <Skeleton
-                        variant="rectangular"
-                        width="100%"
-                        height="100%"
-                      />
-                    )}
-                  </Poster>
-                  <Info>
-                    {!isLoadingMovieById ? (
-                      <Title>{movieById.data.original_title}</Title>
-                    ) : (
-                      <Skeleton variant="text" width={550} height={32} />
-                    )}
+          <BackdropInfo
+            $backdrop={
+              !isLoadingMovieById && !isFetchingMovieById
+                ? movieById?.data.backdrop_path
+                : ''
+            }
+          >
+            <Container>
+              <WrapperInfo>
+                <Poster>
+                  {!isLoadingMovieById && !isFetchingMovieById ? (
+                    <img
+                      src={
+                        movieById?.data.poster_path
+                          ? `https://image.tmdb.org/t/p/w500/${movieById.data.poster_path}`
+                          : noPoster
+                      }
+                      alt={movieById?.data.original_title}
+                      width="100%"
+                    />
+                  ) : (
+                    <Skeleton
+                      variant="rectangular"
+                      width="100%"
+                      height="100%"
+                    />
+                  )}
+                </Poster>
+                <Info>
+                  {!isLoadingMovieById && !isFetchingMovieById ? (
+                    <Title>{movieById?.data.original_title}</Title>
+                  ) : (
+                    <Skeleton variant="text" width={550} height={32} />
+                  )}
 
-                    {!isLoadingMovieById ? (
-                      <WrapperInfo>
-                        {movieById.data.genres.map(({ id, name }: ItemI) => (
-                          <Genre key={id}>{name.toLowerCase()}</Genre>
-                        ))}
-                      </WrapperInfo>
-                    ) : (
-                      <Skeleton variant="text" width={150} height={26} />
-                    )}
+                  {!isLoadingMovieById && !isFetchingMovieById ? (
+                    <WrapperGenre>
+                      {movieById?.data.genres.map(({ id, name }: ItemI) => (
+                        <Genre key={id}>{name.toLowerCase()}</Genre>
+                      ))}
+                    </WrapperGenre>
+                  ) : (
+                    <Skeleton variant="text" width={150} height={26} />
+                  )}
 
-                    {!isLoadingMovieById && movieById?.data.release_date ? (
-                      <InfoName>
-                        Release date:{' '}
-                        <InfoValue>{movieById.data.release_date}</InfoValue>
-                      </InfoName>
-                    ) : (
-                      <Skeleton variant="text" width={200} height={32} />
-                    )}
-                    {!isLoadingMovieById && movieById?.data.tagline ? (
-                      <InfoName>
-                        Tagline: <InfoValue>{movieById.data.tagline}</InfoValue>
-                      </InfoName>
-                    ) : (
-                      <Skeleton variant="text" width={300} height={32} />
-                    )}
-                    {!isLoadingMovieById && movieById?.data.overview ? (
-                      <InfoName>
-                        <InfoValue>{movieById.data.overview}</InfoValue>
-                      </InfoName>
-                    ) : (
-                      <Skeleton variant="text" width="100%" height={255} />
-                    )}
-                    {!isLoadingMovieById && movieById?.data.vote_count > 0 ? (
-                      <InfoName>
-                        <Rating
-                          value={movieById.data.vote_average}
-                          precision={0.1}
-                          readOnly
-                          max={10}
-                        />
-                      </InfoName>
-                    ) : (
-                      <Skeleton variant="text" width={300} height={40} />
-                    )}
-                    {!isLoadingMovieById &&
-                    !!movieById?.data.production_companies.length ? (
-                      <>
-                        <InfoName>Prodaction companies:</InfoName>
-                        <LogoList>
-                          {movieById.data.production_companies.map(
-                            ({ id, name }: ItemI) => (
-                              <Logo key={id}>{name}</Logo>
-                            )
-                          )}
-                        </LogoList>
-                      </>
-                    ) : (
-                      <Skeleton variant="text" width={100} height={60} />
-                    )}
-                  </Info>
-                </WrapperInfo>
-              </Container>
-            </BackdropInfo>
-          )}
+                  {!isLoadingMovieById &&
+                  !isFetchingMovieById &&
+                  movieById?.data.release_date ? (
+                    <InfoName>
+                      Release date:{' '}
+                      <InfoValue>{movieById.data.release_date}</InfoValue>
+                    </InfoName>
+                  ) : (
+                    <Skeleton variant="text" width={200} height={32} />
+                  )}
+                  {!isLoadingMovieById &&
+                  !isFetchingMovieById &&
+                  movieById?.data.tagline ? (
+                    <InfoName>
+                      Tagline: <InfoValue>{movieById.data.tagline}</InfoValue>
+                    </InfoName>
+                  ) : (
+                    <Skeleton variant="text" width={300} height={32} />
+                  )}
+                  {!isLoadingMovieById &&
+                  !isFetchingMovieById &&
+                  movieById?.data.overview ? (
+                    <InfoName>
+                      <InfoValue>{movieById.data.overview}</InfoValue>
+                    </InfoName>
+                  ) : (
+                    <Skeleton variant="text" width="100%" height={255} />
+                  )}
+                  {!isLoadingMovieById &&
+                  !isFetchingMovieById &&
+                  movieById?.data.vote_count > 0 ? (
+                    <InfoName>
+                      <Rating
+                        value={movieById?.data.vote_average}
+                        precision={0.1}
+                        readOnly
+                        max={10}
+                      />
+                    </InfoName>
+                  ) : (
+                    <Skeleton variant="text" width={300} height={40} />
+                  )}
+                  {!isLoadingMovieById &&
+                  !isFetchingMovieById &&
+                  !!movieById?.data.production_companies.length ? (
+                    <>
+                      <InfoName>Prodaction companies:</InfoName>
+                      <LogoList>
+                        {movieById.data.production_companies.map(
+                          ({ id, name }: ItemI) => (
+                            <Logo key={id}>{name}</Logo>
+                          )
+                        )}
+                      </LogoList>
+                    </>
+                  ) : (
+                    <Skeleton variant="text" width={100} height={60} />
+                  )}
+                </Info>
+              </WrapperInfo>
+            </Container>
+          </BackdropInfo>
 
           <Container>
             <Wrapper>
@@ -345,7 +359,6 @@ const MovieDetails: FC = () => {
                     isLoading={isLoadingSimilarMovies}
                     movies={movieSimilar}
                     title="Similar movies"
-                    path="/"
                   />
                 )}
             </Wrapper>

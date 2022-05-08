@@ -63,35 +63,48 @@ const BoxPage: FC<BoxPageProps> = ({
             <Skeleton variant="text" width={95} height={18} />
           </Page>
         )}
-        <List>
-          {movies?.data.results.map(
-            ({
-              id,
-              original_title,
-              original_name,
-              poster_path,
-              release_date,
-              first_air_date,
-            }: ItemI) => (
-              <Item key={id}>
-                <Link
-                  to={{
-                    pathname: `/movies/all/${makeSlug(
-                      original_title || original_name
-                    )}-${id}`,
-                  }}
-                >
-                  <ItemMovie
-                    isLoading={isLoading}
-                    src={poster_path}
-                    date={release_date || first_air_date}
-                    name={original_title || original_name}
-                  />
-                </Link>
-              </Item>
-            )
-          )}
-        </List>
+        {!isLoading ? (
+          <List>
+            {movies?.data.results.map(
+              ({
+                id,
+                original_title,
+                original_name,
+                poster_path,
+                release_date,
+                first_air_date,
+              }: ItemI) => (
+                <Item key={id}>
+                  <Link
+                    to={{
+                      pathname: `/movies/all/${makeSlug(
+                        original_title || original_name
+                      )}-${id}`,
+                    }}
+                  >
+                    <ItemMovie
+                      src={poster_path}
+                      date={release_date || first_air_date}
+                      name={original_title || original_name}
+                    />
+                  </Link>
+                </Item>
+              )
+            )}
+          </List>
+        ) : (
+          <List>
+            {Array(20)
+              .fill(0)
+              .map((item: any) => (
+                <Item>
+                  <Skeleton variant="rectangular" width="100%" height={280} />
+                  <Skeleton variant="text" width={64} height={15} />
+                  <Skeleton variant="text" width={112} height={23} />
+                </Item>
+              ))}
+          </List>
+        )}
         {!isLoading && (
           <WrapperPagination>
             <Pagination

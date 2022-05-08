@@ -69,9 +69,8 @@ export const sliderSettingsForHero = {
 };
 
 export const sliderSettingsForPersonDetails = {
-  infinite: false,
   speed: 500,
-  slidesToScroll: 5,
+  slidesToScroll: 1,
   slidesToShow: 5,
   draggable: false,
   responsive: [
@@ -79,14 +78,14 @@ export const sliderSettingsForPersonDetails = {
       breakpoint: 1080,
       settings: {
         slidesToShow: 4,
-        slidesToScroll: 4,
+        slidesToScroll: 1,
       },
     },
     {
       breakpoint: 600,
       settings: {
         slidesToShow: 2,
-        slidesToScroll: 2,
+        slidesToScroll: 1,
         draggable: true,
       },
     },
