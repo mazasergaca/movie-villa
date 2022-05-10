@@ -45,11 +45,12 @@ const BoxPage: FC<BoxPageProps> = ({
   return (
     <Container>
       <Wrapper>
-        {title && !isLoading ? (
+        {title && !isLoading && (
           <WrapperTitle>
             <Title>{title}</Title>
           </WrapperTitle>
-        ) : (
+        )}
+        {isLoading && (
           <WrapperTitle>
             <Skeleton variant="rectangular" width={180} height={50} />
           </WrapperTitle>

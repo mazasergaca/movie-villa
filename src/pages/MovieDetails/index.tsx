@@ -183,61 +183,69 @@ const MovieDetails: FC = () => {
                   )}
 
                   {!isLoadingMovieById &&
-                  !isFetchingMovieById &&
-                  movieById?.data.release_date ? (
-                    <InfoName>
-                      Release date:{' '}
-                      <InfoValue>{movieById.data.release_date}</InfoValue>
-                    </InfoName>
-                  ) : (
+                    !isFetchingMovieById &&
+                    movieById?.data.release_date && (
+                      <InfoName>
+                        Release date:{' '}
+                        <InfoValue>{movieById.data.release_date}</InfoValue>
+                      </InfoName>
+                    )}
+                  {isLoadingMovieById && isFetchingMovieById && (
                     <Skeleton variant="text" width={200} height={32} />
                   )}
-                  {!isLoadingMovieById &&
-                  !isFetchingMovieById &&
-                  movieById?.data.tagline ? (
-                    <InfoName>
-                      Tagline: <InfoValue>{movieById.data.tagline}</InfoValue>
-                    </InfoName>
-                  ) : (
-                    <Skeleton variant="text" width={300} height={32} />
+                  {movieById?.data.tagline && (
+                    <>
+                      {!isLoadingMovieById && !isFetchingMovieById ? (
+                        <InfoName>
+                          Tagline:{' '}
+                          <InfoValue>{movieById.data.tagline}</InfoValue>
+                        </InfoName>
+                      ) : (
+                        <Skeleton variant="text" width={300} height={32} />
+                      )}
+                    </>
                   )}
+
                   {!isLoadingMovieById &&
-                  !isFetchingMovieById &&
-                  movieById?.data.overview ? (
-                    <InfoName>
-                      <InfoValue>{movieById.data.overview}</InfoValue>
-                    </InfoName>
-                  ) : (
+                    !isFetchingMovieById &&
+                    movieById?.data.overview && (
+                      <InfoName>
+                        <InfoValue>{movieById.data.overview}</InfoValue>
+                      </InfoName>
+                    )}
+                  {isLoadingMovieById && isFetchingMovieById && (
                     <Skeleton variant="text" width="100%" height={255} />
                   )}
                   {!isLoadingMovieById &&
-                  !isFetchingMovieById &&
-                  movieById?.data.vote_count > 0 ? (
-                    <InfoName>
-                      <Rating
-                        value={movieById?.data.vote_average}
-                        precision={0.1}
-                        readOnly
-                        max={10}
-                      />
-                    </InfoName>
-                  ) : (
+                    !isFetchingMovieById &&
+                    movieById?.data.vote_count > 0 && (
+                      <InfoName>
+                        <Rating
+                          value={movieById?.data.vote_average}
+                          precision={0.1}
+                          readOnly
+                          max={10}
+                        />
+                      </InfoName>
+                    )}
+                  {isLoadingMovieById && isFetchingMovieById && (
                     <Skeleton variant="text" width={300} height={40} />
                   )}
                   {!isLoadingMovieById &&
-                  !isFetchingMovieById &&
-                  !!movieById?.data.production_companies.length ? (
-                    <>
-                      <InfoName>Prodaction companies:</InfoName>
-                      <LogoList>
-                        {movieById.data.production_companies.map(
-                          ({ id, name }: ItemI) => (
-                            <Logo key={id}>{name}</Logo>
-                          )
-                        )}
-                      </LogoList>
-                    </>
-                  ) : (
+                    !isFetchingMovieById &&
+                    !!movieById?.data.production_companies.length && (
+                      <>
+                        <InfoName>Prodaction companies:</InfoName>
+                        <LogoList>
+                          {movieById.data.production_companies.map(
+                            ({ id, name }: ItemI) => (
+                              <Logo key={id}>{name}</Logo>
+                            )
+                          )}
+                        </LogoList>
+                      </>
+                    )}
+                  {isLoadingMovieById && isFetchingMovieById && (
                     <Skeleton variant="text" width={100} height={60} />
                   )}
                 </Info>
