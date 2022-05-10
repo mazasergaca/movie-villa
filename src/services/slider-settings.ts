@@ -41,14 +41,14 @@ export const sliderSettingsForBoxMovie = {
     {
       breakpoint: 1080,
       settings: {
-        slidesToScroll: 4,
+        slidesToScroll: 2,
         slidesToShow: 4,
       },
     },
     {
       breakpoint: 600,
       settings: {
-        slidesToScroll: 2,
+        slidesToScroll: 1,
         slidesToShow: 2,
         draggable: true,
       },
@@ -78,7 +78,7 @@ export const sliderSettingsForPersonDetails = {
       breakpoint: 1080,
       settings: {
         slidesToShow: 4,
-        slidesToScroll: 1,
+        slidesToScroll: 2,
       },
     },
     {

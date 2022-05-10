@@ -74,9 +74,13 @@ const Movie: FC = () => {
             </Button>
           </Form>
           <InfoText>
-            {moviesByName?.data.total_results}{' '}
-            {moviesByName?.data.total_results > 1 ? 'movies' : 'movie'} found
-            for your query
+            {!!moviesByName?.data.total_results && (
+              <>
+                {moviesByName?.data.total_results}{' '}
+                {moviesByName?.data.total_results > 1 ? 'movies' : 'movie'}{' '}
+                found for your query
+              </>
+            )}
           </InfoText>
         </Wrapper>
         {moviesByName?.data.total_results > 0 ? (
