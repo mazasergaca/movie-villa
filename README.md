@@ -3,7 +3,7 @@
 
 ## Description
 
-Movie Villa is implemented in JS (already Typescript). The data is received through <a href="https://www.themoviedb.org/">https://www.themoviedb.org</a>, this is the best api for movies that I found.
+Movie Villa is implemented in React (Typescript). The data is received through <a href="https://www.themoviedb.org/">https://www.themoviedb.org</a>, this is the best api for movies that I found.
 
 
 <p align="center"><img src="https://media.giphy.com/media/mQECAmYIGlsPIe2WFp/giphy.gif" width="80%"></p>
